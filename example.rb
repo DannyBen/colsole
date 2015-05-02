@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative 'colones.rb'
+require_relative 'colones'
 include Colones
 
 say "!txtblu!Hello !txtred!World"
