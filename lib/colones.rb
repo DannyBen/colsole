@@ -99,6 +99,8 @@ module Colones
 
 end
 
+self.extend Colones
+
 # Colorize string
 #   colorize() # Demo
 #   puts colorize "!txtred!Self terminating string\n"

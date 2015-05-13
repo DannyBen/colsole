@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'colones'
-  s.version     = '0.1.0'
-  s.date        = '2015-05-01'
+  s.version     = '0.1.1'
+  s.date        = '2015-05-13'
   s.summary     = "Perfume for the console"
   s.description = "Utility functions for colored console applications"
   s.authors     = ["Danny Ben Shitrit"]

@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative 'colones'
-include Colones
+require_relative 'lib/colones'
 
 say "!txtblu!Hello !txtred!World"
 say "Downloading... "
