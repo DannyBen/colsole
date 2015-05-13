@@ -1,16 +1,22 @@
-#
 #  Colones - perfume for the console
 #
-#  colorize string : return a colorized strings
-#  say string      : puts enhancement
-#  resay string    : same as say, but overwrite current line
+#  This class provides several utility functions for console 
+#  appliucation developers.
 #
-#  See usage at the end of the file
+#  - #colorize string - return a colorized strings
+#  - #say string - print a string with colors  
+#  - #resay string - same as say, but overwrite current line  
+#  - #word_wrap strimg - wrap a string and maintain indentation
+#  - #detect_terminal_size
 #
+#  Credits:
+#  terminal width detection by Gabrial Horner https://github.com/cldwalker
 
 module Colones
-	# use color flags (like !txtred!) to change color in the string
-	# space terminated string will leave the cursor at the same line
+	
+	# Prints a color-flagged string.
+	# Use color flags (like !txtred!) to change color in the string.
+	# Space terminated strings will leave the cursor at the same line.
 	def say(text, force_color=false) 
 		last = text[-1, 1]
 		if last == ' ' or last == '\t'
@@ -20,19 +26,52 @@ module Colones
 		end
 	end
 
-	# use resay() after a space terminated say() to replace the line
+	# Erase the current output line, and say a new string.
+	# This should be used after a space terminated say().
 	def resay(text, force_color=false) 
 		is_terminal and text = "\033[2K\r#{text}"
 		say text, force_color
 	end
 
-	# return true of interactive, false if piped
+	# Returns true if interactive terminal, false if piped.
 	def is_terminal 
 		STDOUT.tty?
 	end
 
-	# parse and return a color-flagged string, respect pipe and
-	# auto terminate colored strings
+	# Determines if a shell command exists.
+	def command_exist?(command)
+		ENV['PATH'].split(File::PATH_SEPARATOR).any? {|d| File.exist? File.join(d, command) }
+	end
+
+	# Returns [width, height] of terminal when detected, or a default
+	# value otherwise.
+	def detect_terminal_size(default=80)
+		if (ENV['COLUMNS'] =~ /^\d+$/) && (ENV['LINES'] =~ /^\d+$/)
+			[ENV['COLUMNS'].to_i, ENV['LINES'].to_i]
+		elsif (RUBY_PLATFORM =~ /java/ || (!STDIN.tty? && ENV['TERM'])) && command_exist?('tput')
+			[`tput cols`.to_i, `tput lines`.to_i]
+		elsif STDIN.tty? && command_exist?('stty')
+			`stty size`.scan(/\d+/).map { |s| s.to_i }.reverse
+		else
+			default
+		end
+	end
+
+	# Converts a long string to be wrapped.
+	# If the string starts with one or more spaces, they will be 
+	# preserved in all subsequent lines (i.e., remain indented).
+	#--
+	# TODO: this is currently not word wrap, but just wrap.
+	#       either rename or redo
+	def word_wrap(str, length=80, character=$/)
+		lead = str[/^\s+/]
+		length -= lead.size
+		str.scan(/.{#{length}}|.+/).map { |x| "#{lead}#{x.strip}" }.join(character)
+	end
+
+	# Parses and returns a color-flagged string.
+	# Respects pipe and auto terminates colored strings.
+	# Call without text to see a list/demo of all available colors.
 	def colorize(text=nil, force_color=false) 
 		colors = { 
 			'txtblk' => '[0;30m', # Black - Regular
@@ -96,19 +135,6 @@ module Colones
 
 		return out
 	end
-
 end
 
 self.extend Colones
-
-# Colorize string
-#   colorize() # Demo
-#   puts colorize "!txtred!Self terminating string\n"
-#   puts colorize "A !txtred!multiple !txtylw!color !undblu!string!txtrst! with reset\n"
-	
-# Use say() as a puts enhancer
-#   say "!txtred!Downloading... "
-#   say "!txtgrn!Done"
-#   say "!txtred!Downloading... "
-#   sleep 2
-#   resay "!txtgrn!Downloaded"
