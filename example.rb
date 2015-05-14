@@ -1,8 +1,16 @@
 #!/usr/bin/env ruby
+require_relative 'lib/colsole'
 
-require_relative 'lib/colones'
-
+# colored output (respects pipe)
 say "!txtblu!Hello !txtred!World"
+
+# partial messages
 say "Downloading... "
-sleep 2
-resay "!txtgrn!Downloaded"
+sleep 1
+say "!txtgrn!Downloaded"
+
+# rewriting messages
+say "Compiling... "
+sleep 1
+say "!txtgrn!Done"
+

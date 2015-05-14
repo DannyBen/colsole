@@ -1,4 +1,4 @@
-#  Colones - perfume for the console
+#  Colsole - Coloful Console Applications
 #
 #  This class provides several utility functions for console 
 #  appliucation developers.
@@ -12,7 +12,7 @@
 #  Credits:
 #  terminal width detection by Gabrial Horner https://github.com/cldwalker
 
-module Colones
+module Colsole
 	
 	# Prints a color-flagged string.
 	# Use color flags (like !txtred!) to change color in the string.
@@ -137,4 +137,4 @@ module Colones
 	end
 end
 
-self.extend Colones
+self.extend Colsole
