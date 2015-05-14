@@ -120,13 +120,13 @@ module Colsole
 		if is_terminal or force_color
 			reset_called_last = true
 
-			out = text.gsub /\!([a-z]{6})\!/ do |m|
+			out = text.gsub(/\!([a-z]{6})\!/) do |m|
 				reset_called_last = $1 == "txtrst";
 			 	esc + colors[$1];
 			end
 			reset_called_last or out = "#{out}#{reset}";
 		else 
-			out = text.gsub /\!([a-z]{6})\!/, ''
+			out = text.gsub(/\!([a-z]{6})\!/, '')
 		end
 
 		return out
