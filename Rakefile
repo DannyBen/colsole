@@ -1,20 +1,31 @@
 require 'rake/testtask'
+require 'rdoc/task'
 
 task :default do 
 	system "rake -T"
 end
 
-desc "run tests"
-Rake::TestTask.new do |t|
-	t.libs << 'test'
+# test task
+Rake::TestTask.new {|t| t.libs << 'test'}
+
+Rake::RDocTask.new do |rdoc|
+	files = ['README.md', 'lib/colsole.rb']
+	rdoc.rdoc_files.add(files)
+	rdoc.main = "README.md"
+	rdoc.title = "Colsole Docs"
+	rdoc.rdoc_dir = 'doc/rdoc'
+
+	rdoc.options << '--line-numbers'
+	rdoc.options << '--all'
+	# rdoc.options << '--ri'
 end
 
-desc "run example"
+desc "Run example"
 task :example do
 	system "ruby -w example.rb"
 end
 
-desc "build gem"
+desc "Build gem"
 task :build do
 	system "gem build colsole.gemspec"	
 	files = Dir["*.gem"]
