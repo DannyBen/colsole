@@ -7,6 +7,6 @@ Gem::Specification.new do |s|
   s.authors     = ["Danny Ben Shitrit"]
   s.email       = 'db@dannyben.com'
   s.files       = ["lib/colsole.rb"]
-  s.homepage    = 'http://sector-seven.net'
+  s.homepage    = 'https://github.com/DannyBen/colsole'
   s.license     = 'MIT'
 end

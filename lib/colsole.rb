@@ -22,7 +22,7 @@ module Colsole
 		if last == ' ' or last == '\t'
 			print colorize text, force_color
 		else
-			print colorize "#{text}!txtrst!\n", $force_color;
+			print colorize "#{text}\n", force_color;
 		end
 	end
 
@@ -118,13 +118,12 @@ module Colsole
 		esc = 27.chr
 		reset = esc + colors['txtrst']
 		if is_terminal or force_color
-			reset_called_last = false
+			reset_called_last = true
 
 			out = text.gsub /\!([a-z]{6})\!/ do |m|
 				reset_called_last = $1 == "txtrst";
 			 	esc + colors[$1];
 			end
-
 			reset_called_last or out = "#{out}#{reset}";
 		else 
 			out = text.gsub /\!([a-z]{6})\!/, ''
