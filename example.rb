@@ -1,9 +1,6 @@
 #!/usr/bin/env ruby
 require_relative 'lib/colsole'
 
-say "hello"
-exit
-
 # colored output (respects pipe)
 say "!txtblu!Hello !txtred!World"
 
