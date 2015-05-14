@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
   s.name        = 'colsole'
-  s.version     = '0.1.4.pre'
-  s.date        = '2015-05-14'
+  s.version     = '0.1.5'
+  s.date        = '2015-05-15'
   s.summary     = "Colorful Console Applications"
-  s.description = "Utility functions for colorful console applications"
+  s.description = "Utility functions for making colorful console applications"
   s.authors     = ["Danny Ben Shitrit"]
   s.email       = 'db@dannyben.com'
   s.files       = ["lib/colsole.rb"]
