@@ -60,9 +60,6 @@ module Colsole
 	# Converts a long string to be wrapped.
 	# If the string starts with one or more spaces, they will be 
 	# preserved in all subsequent lines (i.e., remain indented).
-	#--
-	# TODO: this is currently not word wrap, but just wrap.
-	#       either rename or redo
 	def word_wrap(str, length=80, character=$/)
 		lead = str[/^\s+/]
 		length -= lead.size

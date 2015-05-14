@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "Utility functions for colorful console applications"
   s.authors     = ["Danny Ben Shitrit"]
   s.email       = 'db@dannyben.com'
-  s.files       = ["lib/colones.rb"]
+  s.files       = ["lib/colsole.rb"]
   s.homepage    = 'http://sector-seven.net'
   s.license     = 'MIT'
 end
