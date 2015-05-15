@@ -5,7 +5,7 @@ Utility functions for colorful console applications.
 
 ## Install
 
-	$ gem install colsole --pre
+	$ gem install colsole
 
 ## Test
 
