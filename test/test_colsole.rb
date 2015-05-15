@@ -31,9 +31,9 @@ class ColsoleTest < Minitest::Test
 		assert_output("#{out}\n") { say "#{str}"; resay "times." }
 	end
 
-	def test_wrap
+	def test_word_wrap
 		str = "   The winding path to peace is always a worthy one, regardless of how many turns it takes."
-		out = "   The winding path to peace is alway\n   s a worthy one, regardless of how man\n   y turns it takes."
+		out = "   The winding path to peace is\n   always a worthy one, regardless of\n   how many turns it takes."
 		assert_equal out, word_wrap(str, 40)
 	end
 

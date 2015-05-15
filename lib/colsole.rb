@@ -6,11 +6,12 @@
 #  - #colorize string - return a colorized strings
 #  - #say string - print a string with colors  
 #  - #resay string - same as say, but overwrite current line  
-#  - #word_wrap strimg - wrap a string and maintain indentation
+#  - #word_wrap string - wrap a string and maintain indentation
 #  - #detect_terminal_size
 #
 #  Credits:
 #  terminal width detection by Gabrial Horner https://github.com/cldwalker
+#  color mapping by ondrovic http://www.backtrack-linux.org/forums/showthread.php?t=29691&s=f681fb882b13be26ee726e5f335d089e
 
 module Colsole
 	
@@ -57,13 +58,13 @@ module Colsole
 		end
 	end
 
-	# Converts a long string to be wrapped.
+	# Converts a long string to be wrapped keeping words in tact.
 	# If the string starts with one or more spaces, they will be 
 	# preserved in all subsequent lines (i.e., remain indented).
-	def word_wrap(str, length=80, character=$/)
-		lead = str[/^\s+/]
+	def word_wrap(text, length=78)
+		lead = text[/^\s*/]
 		length -= lead.size
-		str.scan(/.{#{length}}|.+/).map { |x| "#{lead}#{x.strip}" }.join(character)
+		text.gsub(/(.{1,#{length}})(\s+|\Z)/, "\\1\n#{lead}").rstrip
 	end
 
 	# Parses and returns a color-flagged string.

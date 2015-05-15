@@ -11,7 +11,34 @@ Utility functions for colorful console applications.
 
 	$ rake test
 
+## Functions
+
+```ruby
+
+# use #say as an alternative to puts
+say "anything"					
+
+# leave a trailing space to keep cursor at the same line
+say "appears in "
+say "one line"
+
+# embed color markers in the string
+say "!txtred!I am RED !txtgrn!I am GREEN"
+
+# wrap long lines while keeping words in tact, and keeping 
+# indentation based on the leading space
+say word_wrap("    one two three four five", 15)
+
+# output:
+#    one two
+#    three four
+#    five
+
+# use #resay after a space terminated string to rewrite the line
+say "downloading... "
+resay "downloaded."
+```
+
 ## Todo
 
-1. Rename `word_wrap` to `wrap` and/or make it wrap on spaces
-2. Consider having `say` automatically word wrap
+- Consider having `say` automatically word wrap
