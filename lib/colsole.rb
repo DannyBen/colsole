@@ -1,17 +1,16 @@
-#  Colsole - Coloful Console Applications
+# Colsole - Coloful Console Applications
 #
-#  This class provides several utility functions for console 
-#  appliucation developers.
+# This class provides several utility functions for console 
+# appliucation developers.
 #
-#  - #colorize string - return a colorized strings
-#  - #say string - print a string with colors  
-#  - #resay string - same as say, but overwrite current line  
-#  - #word_wrap string - wrap a string and maintain indentation
-#  - #detect_terminal_size
+# - #colorize string - return a colorized strings
+# - #say string - print a string with colors  
+# - #resay string - same as say, but overwrite current line  
+# - #word_wrap string - wrap a string and maintain indentation
+# - #detect_terminal_size
 #
-#  Credits:
-#  terminal width detection by Gabrial Horner https://github.com/cldwalker
-#  color mapping by ondrovic http://www.backtrack-linux.org/forums/showthread.php?t=29691&s=f681fb882b13be26ee726e5f335d089e
+# Credits:
+# terminal width detection by Gabrial Horner https://github.com/cldwalker
 
 module Colsole
 	
@@ -71,41 +70,7 @@ module Colsole
 	# Respects pipe and auto terminates colored strings.
 	# Call without text to see a list/demo of all available colors.
 	def colorize(text=nil, force_color=false) 
-		colors = { 
-			'txtblk' => '[0;30m', # Black - Regular
-			'txtred' => '[0;31m', # Red
-			'txtgrn' => '[0;32m', # Green
-			'txtylw' => '[0;33m', # Yellow
-			'txtblu' => '[0;34m', # Blue
-			'txtpur' => '[0;35m', # Purple
-			'txtcyn' => '[0;36m', # Cyan
-			'txtwht' => '[0;37m', # White
-			'bldblk' => '[1;30m', # Black - Bold
-			'bldred' => '[1;31m', # Red
-			'bldgrn' => '[1;32m', # Green
-			'bldylw' => '[1;33m', # Yellow
-			'bldblu' => '[1;34m', # Blue
-			'bldpur' => '[1;35m', # Purple
-			'bldcyn' => '[1;36m', # Cyan
-			'bldwht' => '[1;37m', # White
-			'unkblk' => '[4;30m', # Black - Underline
-			'undred' => '[4;31m', # Red
-			'undgrn' => '[4;32m', # Green
-			'undylw' => '[4;33m', # Yellow
-			'undblu' => '[4;34m', # Blue
-			'undpur' => '[4;35m', # Purple
-			'undcyn' => '[4;36m', # Cyan
-			'undwht' => '[4;37m', # White
-			'bakblk' => '[40m'  , # Black - Background
-			'bakred' => '[41m'  , # Red
-			'bakgrn' => '[42m'  , # Green
-			'bakylw' => '[43m'  , # Yellow
-			'bakblu' => '[44m'  , # Blue
-			'bakpur' => '[45m'  , # Purple
-			'bakcyn' => '[46m'  , # Cyan
-			'bakwht' => '[47m'  , # White
-			'txtrst' => '[0m'   , # Text Reset
-		}
+		colors = prepare_colors
 
 		if text.nil? # Demo
 			i=33;
@@ -116,14 +81,13 @@ module Colsole
 			return
 		end
 
-		esc = 27.chr
-		reset = esc + colors['txtrst']
+		reset = colors['txtrst']
 		if is_terminal or force_color
 			reset_called_last = true
 
 			out = text.gsub(/\!([a-z]{6})\!/) do |m|
 				reset_called_last = $1 == "txtrst";
-			 	esc + colors[$1];
+			 	colors[$1];
 			end
 			reset_called_last or out = "#{out}#{reset}";
 		else 
@@ -131,6 +95,31 @@ module Colsole
 		end
 
 		return out
+	end
+
+	private 
+
+	# Create a colors array with keys such as :green and :bld_green
+	# and values which are the escape codes for the colors.
+	def prepare_colors
+		esc = 27.chr
+		# pattern_full  = "#{esc}[%{decor};%{fg};%{bg}m"
+		pattern_fg    = "#{esc}[%{decor};%{fg}m"
+		pattern_reset = "#{esc}[0m"
+
+		decors = { txt: 0, bld: 1, und: 4, rev: 7 }
+		color_codes = { blk: 0, red: 1, grn: 2, ylw: 3, blu: 4, pur: 5, cyn: 6, wht: 7 }
+		colors = {}
+
+		decors.each do |dk, dv|
+			color_codes.each do |ck, cv|
+				key = "#{dk}#{ck}"
+				val = pattern_fg % { decor: dv, fg: "3#{cv}" }
+				colors[key] = val
+			end
+		end
+		colors['txtrst'] = pattern_reset
+		colors
 	end
 end
 
