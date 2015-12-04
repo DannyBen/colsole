@@ -30,6 +30,10 @@ say "\n!txtylw!Wrap 30 with indent:"
 say word_wrap("        #{poem}", 30)
 sleep 1
 
+# say to STDERR
+say! "!txtred!Error: Failed to fail"
+sleep 1
+
 # see all color tags
 say "\n!txtylw!All color markers:"
 colorize

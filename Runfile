@@ -1,0 +1,14 @@
+require "run-gem-dev"
+
+name    "Colsole Runfile"
+summary "Runfile tasks for building the Colsole gem"
+version Colsole::VERSION
+
+RunGemDev::gem_tasks 'colsole'
+RunGemDev::minitest_tasks
+RunGemDev::rdoc_tasks
+
+help   "Run example script"
+action :example do
+  exec "ruby -w example.rb"
+end

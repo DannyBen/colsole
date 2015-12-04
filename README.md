@@ -13,38 +13,84 @@ Utility functions for colorful console applications.
 
 	$ gem install colsole
 
-## Test
+## Primary Functions
 
-	$ rake test
+### `say "anything"`
 
-## Functions
+An alternative to puts.
 
 ```ruby
+say "Hello"
+```
 
-# use #say as an alternative to puts
-say "anything"					
+Leave a trailing space to keep the cursor at the same line
 
-# leave a trailing space to keep cursor at the same line
+```ruby
 say "appears in "
 say "one line"
+```
 
-# embed color markers in the string
+Embed color markers in the string:
+
+```ruby
 say "!txtred!I am RED !txtgrn!I am GREEN"
+```
 
-# wrap long lines while keeping words in tact, and keeping 
-# indentation based on the leading space
+### `word_wrap "   string"`
+
+Wrap long lines while keeping words intact, and keeping 
+indentation based on the leading spaces in your string:
+
+```ruby
 say word_wrap("    one two three four five", 15)
 
 # output:
 #    one two
 #    three four
 #    five
+```
 
-# use #resay after a space terminated string to rewrite the line
+
+### `resay "anything"`
+
+Use resay after a space terminated "said" string to rewrite the line
+
+```ruby
 say "downloading... "
+# long process here...
 resay "downloaded."
 ```
 
-## Todo
 
-- Consider having `say` automatically word wrap
+### `say! "anything to stderr"`
+
+Use say! to output to stderr with color markers:
+
+```ruby
+say! "!txtred!Error!txtrst!: This just did not work"
+```
+
+## Utility / Support Functions
+
+### `colorize "!txtred!Hello"`
+
+Parses and returns a color-flagged string.
+
+Respects pipe and auto terminates colored strings.
+	
+Call without text to see a list/demo of all available colors.
+	
+
+### `terminal?`
+
+Returns true if we are running in an interactive terminal
+
+### `command_exist? "some_executable"`
+
+Checks if the provided string is a command in the path.
+
+### `detect_terminal_size fallback_value`
+
+Returns an array [width, height] of the terminal, or the supplied 
+`fallback_value` if it is unable to detect.
+

@@ -12,29 +12,36 @@
 # Credits:
 # terminal width detection by Gabrial Horner https://github.com/cldwalker
 
+require "colsole/version"
+
 module Colsole
-	
 	# Prints a color-flagged string.
 	# Use color flags (like !txtred!) to change color in the string.
 	# Space terminated strings will leave the cursor at the same line.
 	def say(text, force_color=false) 
 		last = text[-1, 1]
 		if last == ' ' or last == '\t'
-			print colorize text, force_color
+			print colorize(text, force_color)
 		else
-			print colorize "#{text}\n", force_color;
+			print colorize("#{text}\n", force_color)
 		end
+	end
+
+	# Prints a color-flagged string to STDERR
+	# Use color flags (like !txtred!) to change color in the string.
+	def say!(text, force_color=false) 
+		$stderr.puts colorize(text, force_color)
 	end
 
 	# Erase the current output line, and say a new string.
 	# This should be used after a space terminated say().
 	def resay(text, force_color=false) 
-		is_terminal and text = "\033[2K\r#{text}"
+		terminal? and text = "\033[2K\r#{text}"
 		say text, force_color
 	end
 
 	# Returns true if interactive terminal, false if piped.
-	def is_terminal 
+	def terminal?
 		STDOUT.tty?
 	end
 
@@ -82,7 +89,7 @@ module Colsole
 		end
 
 		reset = colors['txtrst']
-		if is_terminal or force_color
+		if terminal? or force_color
 			reset_called_last = true
 
 			out = text.gsub(/\!([a-z]{6})\!/) do |m|

@@ -1,4 +1,4 @@
-require 'minitest/autorun'
+require_relative 'helpers'
 require_relative '../lib/colsole'
 
 # minitest reference
@@ -35,6 +35,11 @@ class ColsoleTest < Minitest::Test
 		str = "   The winding path to peace is always a worthy one, regardless of how many turns it takes."
 		out = "   The winding path to peace is\n   always a worthy one, regardless of\n   how many turns it takes."
 		assert_equal out, word_wrap(str, 40)
+	end
+
+	def test_say!
+		str = "True leaders dont create followers, they create more leaders"
+		assert_output(nil, "#{str}\n") { say! str }
 	end
 
 end
