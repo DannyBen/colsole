@@ -3,7 +3,5 @@
 /coverage
 /gems
 /Gemfile.lock
-/ssh_hosts.yml
-/custom_hosts.yml
 *.gem
 *.sublime*
