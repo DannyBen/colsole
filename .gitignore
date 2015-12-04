@@ -1,4 +1,9 @@
-doc
-gems
+/dev
+/doc
+/coverage
+/gems
+/Gemfile.lock
+/ssh_hosts.yml
+/custom_hosts.yml
 *.gem
-dev.rb
+*.sublime*
