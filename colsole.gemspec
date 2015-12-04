@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.description = "Utility functions for making colorful console applications"
   s.authors     = ["Danny Ben Shitrit"]
   s.email       = 'db@dannyben.com'
-  s.files       = ["README.md", "lib/colsole.rb"]
+  s.files       = Dir['README.md', 'lib/**/*.rb']
   s.homepage    = 'https://github.com/DannyBen/colsole'
   s.license     = 'MIT'
 

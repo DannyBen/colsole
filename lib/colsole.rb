@@ -1,4 +1,6 @@
-# Colsole - Coloful Console Applications
+require "colsole/version"
+
+# Colsole - Colorful Console Applications
 #
 # This class provides several utility functions for console 
 # appliucation developers.
@@ -11,8 +13,6 @@
 #
 # Credits:
 # terminal width detection by Gabrial Horner https://github.com/cldwalker
-
-require "colsole/version"
 
 module Colsole
 	# Prints a color-flagged string.
