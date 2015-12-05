@@ -30,7 +30,7 @@ module Colsole
 	# Prints a color-flagged string to STDERR
 	# Use color flags (like !txtred!) to change color in the string.
 	def say!(text, force_color=false) 
-		$stderr.puts colorize(text, force_color)
+		$stderr.puts colorize(text, force_color, :stderr)
 	end
 
 	# Erase the current output line, and say a new string.
@@ -40,9 +40,19 @@ module Colsole
 		say text, force_color
 	end
 
-	# Returns true if interactive terminal, false if piped.
-	def terminal?
+	# Returns true if stdout/stderr is interactive terminal
+	def terminal?(stream=:stdout)
+		stream == :stdout ? out_terminal? : err_terminal?
+	end
+
+	# Returns true if stdout is interactive terminal
+	def out_terminal?
 		STDOUT.tty?
+	end
+
+	# Returns true if stderr is interactive terminal
+	def err_terminal?
+		STDERR.tty?
 	end
 
 	# Determines if a shell command exists.
@@ -76,7 +86,7 @@ module Colsole
 	# Parses and returns a color-flagged string.
 	# Respects pipe and auto terminates colored strings.
 	# Call without text to see a list/demo of all available colors.
-	def colorize(text=nil, force_color=false) 
+	def colorize(text=nil, force_color=false, stream=:stdout) 
 		colors = prepare_colors
 
 		if text.nil? # Demo
@@ -89,7 +99,7 @@ module Colsole
 		end
 
 		reset = colors['txtrst']
-		if terminal? or force_color
+		if terminal?(stream) or force_color
 			reset_called_last = true
 
 			out = text.gsub(/\!([a-z]{6})\!/) do |m|
