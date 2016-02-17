@@ -1,5 +1,5 @@
 Colsole
-=======
+==================================================
 
 [![Gem Version](https://badge.fury.io/rb/colsole.svg)](http://badge.fury.io/rb/colsole)
 [![Build Status](https://travis-ci.org/DannyBen/colsole.svg?branch=master)](https://travis-ci.org/DannyBen/colsole)
@@ -9,11 +9,15 @@ Colsole
 
 Utility functions for colorful console applications.
 
-## Install
+Install
+--------------------------------------------------
 
-	$ gem install colsole
+```
+$ gem install colsole
+```
 
-## Primary Functions
+Primary Functions
+--------------------------------------------------
 
 ### `say "anything"`
 
@@ -70,7 +74,8 @@ Use say! to output to stderr with color markers:
 say! "!txtred!Error!txtrst!: This just did not work"
 ```
 
-## Utility / Support Functions
+Utility / Support Functions
+--------------------------------------------------
 
 ### `colorize "!txtred!Hello"`
 
