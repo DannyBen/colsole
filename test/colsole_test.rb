@@ -1,4 +1,4 @@
-require_relative 'helpers'
+require_relative 'test_helper'
 require_relative '../lib/colsole'
 
 # minitest reference

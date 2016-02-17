@@ -14,11 +14,10 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/DannyBen/colsole'
   s.license     = 'MIT'
 
-  s.add_development_dependency 'runfile', '~> 0.5'
-  s.add_development_dependency 'run-gem-dev', '~> 0.2'
+  s.add_development_dependency 'runfile', '~> 0.6'
+  s.add_development_dependency 'runfile-tasks', '~> 0.4'
   s.add_development_dependency 'minitest', '~> 5.8'
   s.add_development_dependency 'minitest-reporters', '~> 1.1'
-  s.add_development_dependency 'rake', '~> 10.4'
   s.add_development_dependency 'simplecov', '~> 0.10'
 
 end
