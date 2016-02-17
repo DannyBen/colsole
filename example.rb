@@ -21,7 +21,7 @@ say word_wrap "        Still, she's got a lot of spirit. I don't know, what do y
 sleep 1
 
 # wrap long lines that contain newlines
-poem = "Today I made my way to school\nI sat in back and played it cool.\nI think of all I might have missed\nand then I put them in a list."
+poem = "Today I made my way to school\nI sat in back and played it cool.\n\nI think of all I might have missed\nand then I put them in a list."
 say "\n!txtylw!No Wrap:"
 say poem
 say "\n!txtylw!Wrap 30:"

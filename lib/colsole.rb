@@ -80,7 +80,7 @@ module Colsole
 	def word_wrap(text, length=78)
 		lead = text[/^\s*/]
 		length -= lead.size
-		text.gsub(/(.{1,#{length}})(\s+|\Z)/, "\\1\n#{lead}").rstrip
+		text.gsub(/(.{1,#{length}}\n?)(\s+|\Z)/, "\\1\n#{lead}").rstrip
 	end
 
 	# Parses and returns a color-flagged string.
