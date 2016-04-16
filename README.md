@@ -130,7 +130,7 @@ Returns an array [width, height] of the terminal, or the supplied
 Color Codes
 --------------------------------------------------
 
-[![Color Codes](https://raw.githubusercontent.com/DannyBen/colsole/say-status/color-codes.png)](https://raw.githubusercontent.com/DannyBen/colsole/say-status/color-codes.png)
+[![Color Codes](https://raw.githubusercontent.com/DannyBen/colsole/master/color-codes.png)](https://raw.githubusercontent.com/DannyBen/colsole/master/color-codes.png)
 
 
-[1]: https://github.com/DannyBen/colsole/blob/say-status/example.rb
+[1]: https://github.com/DannyBen/colsole/blob/master/example.rb
