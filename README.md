@@ -127,4 +127,10 @@ Returns an array [width, height] of the terminal, or the supplied
 `fallback_value` if it is unable to detect.
 
 
+Color Codes
+--------------------------------------------------
+
+[![Color Codes](https://raw.githubusercontent.com/DannyBen/colsole/say-status/color-codes.png)](https://raw.githubusercontent.com/DannyBen/colsole/say-status/color-codes.png)
+
+
 [1]: https://github.com/DannyBen/colsole/blob/say-status/example.rb
