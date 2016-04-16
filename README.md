@@ -6,8 +6,12 @@ Colsole
 [![Code Climate](https://codeclimate.com/github/DannyBen/colsole/badges/gpa.svg)](https://codeclimate.com/github/DannyBen/colsole)
 [![Gem](https://img.shields.io/gem/dt/colsole.svg)](https://rubygems.org/gems/colsole)
 
+---
 
 Utility functions for colorful console applications.
+
+---
+
 
 Install
 --------------------------------------------------
@@ -15,6 +19,16 @@ Install
 ```
 $ gem install colsole
 ```
+
+Features
+--------------------------------------------------
+
+- Print colored messages 
+- Color parts of a message
+- Print neatly aligned status messages
+- Word wrap with indentation consideration
+
+See the [Examples file][1] for more.
 
 Primary Functions
 --------------------------------------------------
@@ -38,6 +52,20 @@ Embed color markers in the string:
 
 ```ruby
 say "!txtred!I am RED !txtgrn!I am GREEN"
+```
+
+### `say_status :status, "message" [, :color]`
+
+Print a message with a colored status
+
+```ruby
+say_status :create, "perpetual energy"
+```
+
+You can provide a color in the regulat 6 letter code:
+
+```ruby
+say_status :error, "does not compute", :txtred
 ```
 
 ### `word_wrap "   string"`
@@ -84,7 +112,6 @@ Parses and returns a color-flagged string.
 Respects pipe and auto terminates colored strings.
 	
 Call without text to see a list/demo of all available colors.
-	
 
 ### `terminal?`
 
@@ -99,3 +126,11 @@ Checks if the provided string is a command in the path.
 Returns an array [width, height] of the terminal, or the supplied 
 `fallback_value` if it is unable to detect.
 
+
+Color Codes
+--------------------------------------------------
+
+[![Color Codes](https://raw.githubusercontent.com/DannyBen/colsole/say-status/color-codes.png)](https://raw.githubusercontent.com/DannyBen/colsole/say-status/color-codes.png)
+
+
+[1]: https://github.com/DannyBen/colsole/blob/say-status/example.rb

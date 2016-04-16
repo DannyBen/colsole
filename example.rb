@@ -34,6 +34,11 @@ sleep 1
 say! "!txtred!Error: Failed to fail"
 sleep 1
 
+# say status
+say_status :create, 'perpetual energy'
+say_status :destroy, 'ozone layer', :txtred
+sleep 1
+
 # see all color tags
 say "\n!txtylw!All color markers:"
 colorize
