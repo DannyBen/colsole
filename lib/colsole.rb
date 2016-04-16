@@ -2,13 +2,14 @@ require "colsole/version"
 
 # Colsole - Colorful Console Applications
 #
-# This class provides several utility functions for console 
-# appliucation developers.
+# This class provides several utility functions for console application 
+# developers.
 #
 # - #colorize string - return a colorized strings
 # - #say string - print a string with colors  
 # - #say! string - print a string with colors to stderr
 # - #resay string - same as say, but overwrite current line  
+# - #say_status symbol, string [, color] - print a message with status
 # - #word_wrap string - wrap a string and maintain indentation
 # - #detect_terminal_size
 #
@@ -39,6 +40,13 @@ module Colsole
   def resay(text, force_color=false) 
     terminal? and text = "\033[2K\r#{text}"
     say text, force_color
+  end
+
+  # Prints a line with a colored status and message.
+  # Status can be a symbol or a string. Color is optional, defaulted to
+  # green (:txtgrn).
+  def say_status(status, message, color=:txtgrn)
+    say "!#{color}!#{status.to_s.rjust 12} !txtrst! #{message}"
   end
 
   # Returns true if stdout/stderr is interactive terminal
@@ -88,8 +96,6 @@ module Colsole
   # Respects pipe and auto terminates colored strings.
   # Call without text to see a list/demo of all available colors.
   def colorize(text=nil, force_color=false, stream=:stdout) 
-    colors = prepare_colors
-
     if text.nil? # Demo
       i=33;
       colors.each do |k,v| 
@@ -117,7 +123,11 @@ module Colsole
 
   private 
 
-  # Create a colors array with keys such as :green and :bld_green
+  def colors
+    @colors ||= prepare_colors
+  end
+
+  # Create a colors array with keys such as :txtgrn and :bldgrn
   # and values which are the escape codes for the colors.
   def prepare_colors
     esc = 27.chr

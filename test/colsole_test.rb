@@ -1,9 +1,6 @@
 require_relative 'test_helper'
 require_relative '../lib/colsole'
 
-# minitest reference
-# http://www.mattsears.com/articles/2011/12/10/minitest-quick-reference
-
 class ColsoleTest < Minitest::Test
   include Colsole
   def test_say
@@ -29,6 +26,16 @@ class ColsoleTest < Minitest::Test
     str = "Heroes are made by the "   
     out = "Heroes are made by the \e[2K\rtimes."
     assert_output("#{out}\n") { say "#{str}"; resay "times." }
+  end
+
+  def test_say_status
+    expect = "\e[0;32m      create \e[0m hello\n"
+    assert_output(expect) { say_status :create, "hello" }
+  end
+
+  def test_say_status_with_color
+    expect = "\e[0;31m      create \e[0m hello\n"
+    assert_output(expect) { say_status :create, "hello", :txtred }
   end
 
   def test_word_wrap
