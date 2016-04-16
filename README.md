@@ -28,6 +28,8 @@ Features
 - Print neatly aligned status messages
 - Word wrap with indentation consideration
 
+See the [Examples file][1] for more.
+
 Primary Functions
 --------------------------------------------------
 
@@ -124,3 +126,5 @@ Checks if the provided string is a command in the path.
 Returns an array [width, height] of the terminal, or the supplied 
 `fallback_value` if it is unable to detect.
 
+
+[1]: https://github.com/DannyBen/colsole/blob/say-status/example.rb
