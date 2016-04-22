@@ -40,13 +40,13 @@ class ColsoleTest < Minitest::Test
 
   def test_word_wrap
     str = "   The winding path to peace is always a worthy one, regardless of how many turns it takes."
-    out = "   The winding path to peace is\n   always a worthy one, regardless of\n   how many turns it takes."
+    out = "   The winding path to peace is always a\n   worthy one, regardless of how many\n   turns it takes."
     assert_equal out, word_wrap(str, 40)
   end
 
   def test_word_wrap_newline
     str = "   hello world\n\none\ntwo"
-    out = "   hello\n   world\n\n   one\n   two"
+    out = "   hello\n   world\n   \n   one\n   two"
     assert_equal out, word_wrap(str, 12)
   end
 
