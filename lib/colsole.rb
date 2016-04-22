@@ -71,7 +71,7 @@ module Colsole
 
   # Returns [width, height] of terminal when detected, or a default
   # value otherwise.
-  def detect_terminal_size(default=80)
+  def detect_terminal_size(default=[80,30])
     if (ENV['COLUMNS'] =~ /^\d+$/) && (ENV['LINES'] =~ /^\d+$/)
       [ENV['COLUMNS'].to_i, ENV['LINES'].to_i]
     elsif (RUBY_PLATFORM =~ /java/ || (!STDIN.tty? && ENV['TERM'])) && command_exist?('tput')
@@ -83,10 +83,16 @@ module Colsole
     end
   end
 
+  # Returns terminal width with re-asking
+  def terminal_width
+    @terminal_width ||= detect_terminal_size[0]
+  end
+
   # Converts a long string to be wrapped keeping words in tact.
   # If the string starts with one or more spaces, they will be 
   # preserved in all subsequent lines (i.e., remain indented).
-  def word_wrap(text, length=78)
+  def word_wrap(text, length=nil)
+    length ||= terminal_width
     lead = text[/^\s*/]
     text.strip!
     length -= lead.length
