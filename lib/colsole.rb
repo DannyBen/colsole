@@ -88,8 +88,11 @@ module Colsole
   # preserved in all subsequent lines (i.e., remain indented).
   def word_wrap(text, length=78)
     lead = text[/^\s*/]
-    length -= lead.size
-    text.gsub(/(.{1,#{length}}\n?)(\s+|\Z)/, "\\1\n#{lead}").rstrip
+    text.strip!
+    length -= lead.length
+    text.split("\n").collect! do |line|
+      line.length > length ? line.gsub(/(.{1,#{length}})(\s+|$)/, "#{lead}\\1\n").rstrip : "#{lead}#{line}"
+    end * "\n"
   end
 
   # Parses and returns a color-flagged string.
