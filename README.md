@@ -1,10 +1,10 @@
 Colsole
 ==================================================
 
-[![Gem Version](https://badge.fury.io/rb/colsole.svg)](https://rubygems.org/gems/colsole)
-[![Build Status](https://travis-ci.org/DannyBen/colsole.svg?branch=master)](https://travis-ci.org/DannyBen/colsole)
-[![Code Climate](https://codeclimate.com/github/DannyBen/colsole/badges/gpa.svg)](https://codeclimate.com/github/DannyBen/colsole)
-[![Gem](https://img.shields.io/gem/dt/colsole.svg)](https://rubygems.org/gems/colsole)
+[![Gem](https://img.shields.io/gem/v/colsole.svg?style=flat-square)](https://rubygems.org/gems/colsole)
+[![Travis](https://img.shields.io/travis/DannyBen/colsole.svg?style=flat-square)](https://travis-ci.org/DannyBen/colsole)
+[![Code Climate](https://img.shields.io/codeclimate/github/DannyBen/colsole.svg?style=flat-square)](https://codeclimate.com/github/DannyBen/colsole)
+[![Gem](https://img.shields.io/gem/dt/colsole.svg?style=flat-square)](https://rubygems.org/gems/colsole)
 
 ---
 

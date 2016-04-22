@@ -105,35 +105,28 @@ module Colsole
   # Respects pipe and auto terminates colored strings.
   # Call without text to see a list/demo of all available colors.
   def colorize(text=nil, force_color=false, stream=:stdout) 
-    if text.nil? # Demo
-      i=33;
-      colors.each do |k,v| 
-        puts colorize "#{k} = !#{k}! #{i} bottles of beer on the wall !txtrst!"
-        i -= 1
-      end
-      return
-    end
-
-    reset = colors['txtrst']
-    if terminal?(stream) or force_color
-      reset_called_last = true
-
-      out = text.gsub(/\!([a-z]{6})\!/) do |m|
-        reset_called_last = $1 == "txtrst";
-        colors[$1];
-      end
-      reset_called_last or out = "#{out}#{reset}";
-    else 
-      out = text.gsub(/\!([a-z]{6})\!/, '')
-    end
-
-    return out
+    return show_color_demo if text.nil?
+    return strip_color_markers(text) unless terminal?(stream) || force_color
+    colorize! text
   end
 
-  private 
+  private
 
   def colors
     @colors ||= prepare_colors
+  end
+
+  def colorize!(text)
+    reset = colors['txtrst']
+    reset_called_last = true
+
+    out = text.gsub(/\!([a-z]{6})\!/) do |m|
+      reset_called_last = $1 == "txtrst";
+      colors[$1];
+    end
+    
+    reset_called_last or out = "#{out}#{reset}";
+    out
   end
 
   # Create a colors array with keys such as :txtgrn and :bldgrn
@@ -158,6 +151,19 @@ module Colsole
     colors['txtrst'] = pattern_reset
     colors
   end
+
+  def show_color_demo
+    i=33;
+    colors.each do |k,v| 
+      puts colorize "#{k} = !#{k}! #{i} bottles of beer on the wall !txtrst!"
+      i -= 1
+    end
+  end
+
+  def strip_color_markers(text)
+    text.gsub(/\!([a-z]{6})\!/, '')
+  end
+
 end
 
 self.extend Colsole
