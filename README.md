@@ -68,7 +68,7 @@ You can provide a color in the regulat 6 letter code:
 say_status :error, "does not compute", :txtred
 ```
 
-### `word_wrap "   string"`
+### `word_wrap "   string" [, length]`
 
 Wrap long lines while keeping words intact, and keeping 
 indentation based on the leading spaces in your string:
@@ -81,6 +81,9 @@ say word_wrap("    one two three four five", 15)
 #    three four
 #    five
 ```
+
+If `length` is not provided, `word_wrap` will attempt to determine it
+automatically based on the width of the terminal.
 
 
 ### `resay "anything"`
@@ -123,7 +126,7 @@ Checks if the provided string is a command in the path.
 
 ### `detect_terminal_size fallback_value`
 
-Returns an array [width, height] of the terminal, or the supplied 
+Returns an array `[width, height]` of the terminal, or the supplied 
 `fallback_value` if it is unable to detect.
 
 
