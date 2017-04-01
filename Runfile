@@ -1,6 +1,6 @@
 require "runfile-tasks"
 
-name    "Colsole Runfile"
+title   "Colsole Runfile"
 summary "Runfile tasks for building the Colsole gem"
 version Colsole::VERSION
 

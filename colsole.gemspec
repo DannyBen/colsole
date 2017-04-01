@@ -16,9 +16,9 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
   s.required_ruby_version = ">= 2.0.0"
 
-  s.add_development_dependency 'runfile', '~> 0.8'
+  s.add_development_dependency 'runfile', '~> 0.9'
   s.add_development_dependency 'runfile-tasks', '~> 0.4'
-  s.add_development_dependency 'minitest', '~> 5.8'
+  s.add_development_dependency 'minitest', '~> 5.10'
   s.add_development_dependency 'minitest-reporters', '~> 1.1'
   s.add_development_dependency 'simplecov', '~> 0.14'
 end
