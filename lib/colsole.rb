@@ -77,7 +77,8 @@ module Colsole
     elsif (RUBY_PLATFORM =~ /java/ || (!STDIN.tty? && ENV['TERM'])) && command_exist?('tput')
       [`tput cols`.to_i, `tput lines`.to_i]
     elsif STDIN.tty? && command_exist?('stty')
-      `stty size`.scan(/\d+/).map { |s| s.to_i }.reverse
+      result = `stty size`.scan(/\d+/).map { |s| s.to_i }.reverse
+      result == [0,0] ? default : result
     else
       default
     end
