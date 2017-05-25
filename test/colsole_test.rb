@@ -55,4 +55,10 @@ class ColsoleTest < Minitest::Test
     assert_output(nil, "#{str}\n") { say! str }
   end
 
+  def test_detect_terminal_size
+    result = detect_terminal_size
+    assert_operator result[0], :>, 0
+    assert_operator result[1], :>, 0
+  end
+
 end
