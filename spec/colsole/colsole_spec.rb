@@ -66,22 +66,87 @@ describe Colsole do
   end
 
   describe "#detect_terminal_size" do
-    context "when size can be detected" do
+    context "when COLUMNS and LINES are set" do
+      before do
+        ENV['COLUMNS'] = "44"
+        ENV['LINES'] = "11"
+      end
+
       let(:subject) { detect_terminal_size }
 
-      it "returns the size" do
-        expect(subject[0]).to be_a Fixnum
-        expect(subject[1]).to be_a Fixnum
+      it "returns the size from the environment" do
+        expect(subject[0]).to eq 44
+        expect(subject[1]).to eq 11
       end
     end
 
-    context "when size cannot be detected" do
-      let(:subject) { detect_terminal_size [40,20]}
-
-      it "returns the default size" do
-        expect(Terminal).to receive(:size).and_return({width:nil, height:nil})
-        expect(subject).to eq [40,20]
+    context "when COLUMNS and LINES are unset" do
+      before do
+        ENV['COLUMNS'] = nil
+        ENV['LINES'] = nil
       end
+
+      context "when using tput" do
+        let(:subject) { detect_terminal_size }
+
+        before do
+          expect(STDIN).to receive(:tty?).and_return false
+          ENV['TERM'] ||= 'linux'
+          expect(self).to receive(:command_exist?).with('tput').and_return true
+          expect(self).to receive(:`).with('tput cols 2>&1').and_return 44
+          expect(self).to receive(:`).with('tput lines 2>&1').and_return 33
+        end
+
+        it "returns the size" do
+          expect(subject[0]).to eq 44
+          expect(subject[1]).to eq 33
+        end
+      end
+
+      context "when using stty" do
+        let(:subject) { detect_terminal_size }
+
+        before do
+          expect(STDIN).to receive(:tty?).twice.and_return true
+          expect(self).to receive(:command_exist?).with('stty').and_return true
+          expect(self).to receive(:`).with('stty size 2>&1').and_return '12 66'
+        end
+
+        it "returns the size" do
+          expect(subject[0]).to eq 66
+          expect(subject[1]).to eq 12
+        end
+      end
+
+      context "when cannot detect size" do
+        let(:subject) { detect_terminal_size [55,33] }
+
+        before do
+          expect(STDIN).to receive(:tty?).twice.and_return true
+          expect(self).to receive(:command_exist?).with('stty').and_return false
+        end
+
+        it "returns the default size" do
+          expect(subject[0]).to eq 55
+          expect(subject[1]).to eq 33
+        end
+      end
+
+      context "when result is not a number" do
+        let(:subject) { detect_terminal_size [55,33] }
+
+        before do
+          expect(STDIN).to receive(:tty?).twice.and_return true
+          expect(self).to receive(:command_exist?).with('stty').and_return true
+          expect(self).to receive(:`).with('stty size 2>&1').and_return 'invalid-values'
+        end
+
+        it "returns the default size" do
+          expect(subject[0]).to eq 55
+          expect(subject[1]).to eq 33
+        end
+      end
+
     end
   end
 
@@ -90,7 +155,6 @@ describe Colsole do
       expect(terminal_width).to eq detect_terminal_size[0]
     end
   end
-
 
   describe "#word_wrap" do
     it "adds newlines at wrap point" do

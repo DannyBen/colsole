@@ -1,5 +1,4 @@
 require "colsole/version"
-require "terminal-size"
 
 # Colsole - Colorful Console Applications
 #
@@ -73,10 +72,17 @@ module Colsole
   # Returns [width, height] of terminal when detected, or a default
   # value otherwise.
   def detect_terminal_size(default=[80,30])
-    size = Terminal.size
-    width = size[:width] || default[0]
-    height = size[:height] || default[1]
-    [width, height]
+    if (ENV['COLUMNS'] =~ /^\d+$/) && (ENV['LINES'] =~ /^\d+$/)
+      result = [ENV['COLUMNS'].to_i, ENV['LINES'].to_i]
+    elsif (RUBY_PLATFORM =~ /java/ || (!STDIN.tty? && ENV['TERM'])) && command_exist?('tput')
+      result = [`tput cols 2>&1`.to_i, `tput lines 2>&1`.to_i]
+    elsif STDIN.tty? && command_exist?('stty')
+      result = `stty size 2>&1`.scan(/\d+/).map { |s| s.to_i }.reverse
+    else
+      result = default
+    end
+    result = default unless result[0].is_a? Fixnum and result[1].is_a? Fixnum and result[0] > 0 and result[1] > 0
+    result
   end
 
   # Returns terminal width with re-asking
