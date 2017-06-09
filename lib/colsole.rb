@@ -81,7 +81,7 @@ module Colsole
 
   # Returns terminal width with re-asking
   def terminal_width
-    @terminal_width ||= detect_terminal_size[0]
+    detect_terminal_size[0]
   end
 
   # Converts a long string to be wrapped keeping words in tact.

@@ -5,7 +5,7 @@ summary "Runfile tasks for building the Colsole gem"
 version Colsole::VERSION
 
 RunfileTasks::RubyGems.all 'colsole'
-RunfileTasks::Testing.minitest
+RunfileTasks::Testing.rspec
 RunfileTasks::Docs.rdoc
 
 help   "Run example script"
