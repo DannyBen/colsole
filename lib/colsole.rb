@@ -73,20 +73,21 @@ module Colsole
   # value otherwise.
   def detect_terminal_size(default=[80,30])
     if (ENV['COLUMNS'] =~ /^\d+$/) && (ENV['LINES'] =~ /^\d+$/)
-      [ENV['COLUMNS'].to_i, ENV['LINES'].to_i]
+      result = [ENV['COLUMNS'].to_i, ENV['LINES'].to_i]
     elsif (RUBY_PLATFORM =~ /java/ || (!STDIN.tty? && ENV['TERM'])) && command_exist?('tput')
-      [`tput cols`.to_i, `tput lines`.to_i]
+      result = [`tput cols 2>&1`.to_i, `tput lines 2>&1`.to_i]
     elsif STDIN.tty? && command_exist?('stty')
-      result = `stty size`.scan(/\d+/).map { |s| s.to_i }.reverse
-      result == [0,0] ? default : result
+      result = `stty size 2>&1`.scan(/\d+/).map { |s| s.to_i }.reverse
     else
-      default
+      result = default
     end
+    result = default unless result[0].is_a? Fixnum and result[1].is_a? Fixnum and result[0] > 0 and result[1] > 0
+    result
   end
 
   # Returns terminal width with re-asking
   def terminal_width
-    @terminal_width ||= detect_terminal_size[0]
+    detect_terminal_size[0]
   end
 
   # Converts a long string to be wrapped keeping words in tact.
