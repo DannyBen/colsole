@@ -12,3 +12,7 @@ help   "Run example script"
 action :example do
   exec "ruby -w example.rb"
 end
+
+action :debug
+  p detect_terminal_size
+end

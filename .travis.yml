@@ -7,4 +7,4 @@ rvm:
 notifications:
   email: false
 
-script: bundle exec run spec
+script: "bundle exec run debug && bundle exec run spec"
