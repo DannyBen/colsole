@@ -81,7 +81,7 @@ module Colsole
     else
       result = default
     end
-    result = default unless result[0].is_a? Fixnum and result[1].is_a? Fixnum and result[0] > 0 and result[1] > 0
+    result = default unless result[0].is_a? Integer and result[1].is_a? Integer and result[0] > 0 and result[1] > 0
     result
   end
 
