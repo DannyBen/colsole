@@ -39,13 +39,13 @@ describe Colsole do
 
   describe "#say_status" do
     it "prints a colorful status message" do
-      expected = "\e[0;32m      create \e[0m hello\n"
+      expected = "\e[0;32mcreate\e[0m ·············· hello\n"
       expect{say_status :create, "hello"}.to output(expected).to_stdout
     end
 
     context "with an explicit color" do
       it "prints a colorful status message" do
-        expected = "\e[0;31m      create \e[0m hello\n"
+        expected = "\e[0;31mcreate\e[0m ·············· hello\n"
         expect{say_status :create, "hello", :txtred}.to output(expected).to_stdout
       end
     end
