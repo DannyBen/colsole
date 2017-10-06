@@ -43,10 +43,12 @@ module Colsole
   end
 
   # Prints a line with a colored status and message.
-  # Status can be a symbol or a string. Color is optional, defaulted to
-  # green (:txtgrn).
-  def say_status(status, message, color=:txtgrn)
-    say "!#{color}!#{status.to_s.rjust 12} !txtrst! #{message}"
+  # Status can be a symbol or a string. Color is optional, defaults to
+  # green (:txtgrn) when there is a message, and to blue (:txtblu) when
+  # there is only a status
+  def say_status(status, message=nil, color=nil)
+    color ||= (message ? :txtgrn : :txtblu)
+    say "!#{color}!#{status.to_s.rjust 12} !txtrst! #{message}".strip
   end
 
   # Returns true if stdout/stderr is interactive terminal
@@ -85,7 +87,7 @@ module Colsole
     result
   end
 
-  # Returns terminal width with re-asking
+  # Returns terminal width
   def terminal_width
     detect_terminal_size[0]
   end

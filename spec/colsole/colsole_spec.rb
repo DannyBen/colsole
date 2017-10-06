@@ -49,6 +49,13 @@ describe Colsole do
         expect{say_status :create, "hello", :txtred}.to output(expected).to_stdout
       end
     end
+
+    context "without a message" do
+      it "uses a different default color" do
+        expected = "\e[0;34m      create \e[0m\n"
+        expect{say_status :create}.to output(expected).to_stdout
+      end
+    end
   end
 
   describe "#command_exist?" do
