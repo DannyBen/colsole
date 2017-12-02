@@ -169,5 +169,3 @@ module Colsole
   end
 
 end
-
-self.extend Colsole
