@@ -4,7 +4,7 @@ Colsole
 [![Gem](https://img.shields.io/gem/v/colsole.svg?style=flat-square)](https://rubygems.org/gems/colsole)
 [![Travis](https://img.shields.io/travis/DannyBen/colsole.svg?style=flat-square)](https://travis-ci.org/DannyBen/colsole)
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/DannyBen/colsole.svg?style=flat-square)](https://codeclimate.com/github/DannyBen/colsole)
-[![Issues](https://img.shields.io/codeclimate/issues/github/DannyBen/colsole.svg?style=flat-square)](https://codeclimate.com/github/DannyBen/colsole)
+[![Issues](https://img.shields.io/codeclimate/issues/DannyBen/colsole.svg?style=flat-square)](https://codeclimate.com/github/DannyBen/colsole)
 [![Gem](https://img.shields.io/gem/dt/colsole.svg?style=flat-square)](https://rubygems.org/gems/colsole)
 
 ---
