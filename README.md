@@ -129,6 +129,11 @@ Checks if the provided string is a command in the path.
 Returns an array `[width, height]` of the terminal, or the supplied 
 `fallback_value` if it is unable to detect.
 
+### `terminal_width`
+
+Returns only the terminal width. This is a shortcut to 
+`detect_terminal_size[0]`.
+
 
 Color Codes
 --------------------------------------------------

@@ -3,4 +3,5 @@
 /coverage
 /gems
 /Gemfile.lock
+/debug.rb
 *.gem
