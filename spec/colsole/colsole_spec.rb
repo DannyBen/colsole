@@ -177,6 +177,15 @@ describe Colsole do
         expect(word_wrap(str, 12)).to eq out      
       end
     end
+
+    context "with lines that contain words longer than width" do
+      it "adds newlines at wrap points" do
+        str = "  12345678 abc 12345678"
+        out = "  123456\n  78 abc\n  123456\n  78"
+        expect(word_wrap(str, 8)).to eq out      
+      end
+    end
+
   end
 
   describe "#colorize" do    

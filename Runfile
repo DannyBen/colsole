@@ -12,3 +12,5 @@ help   "Run example script"
 action :example do
   exec "ruby -w example.rb"
 end
+
+require_relative 'debug' if File.exist? 'debug.rb'

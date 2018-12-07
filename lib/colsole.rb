@@ -12,6 +12,7 @@ require "colsole/version"
 # - #say_status symbol, string [, color] - print a message with status
 # - #word_wrap string - wrap a string and maintain indentation
 # - #detect_terminal_size
+# - #terminal_width
 #
 # Credits:
 # terminal width detection by Gabrial Horner https://github.com/cldwalker
@@ -101,7 +102,12 @@ module Colsole
     text.strip!
     length -= lead.length
     text.split("\n").collect! do |line|
-      line.length > length ? line.gsub(/(.{1,#{length}})(\s+|$)/, "#{lead}\\1\n").rstrip : "#{lead}#{line}"
+      if line.length > length
+        line.gsub!(/([^\s]{#{length}})([^\s+$])/, "\\1 \\2")
+        line.gsub(/(.{1,#{length}})(\s+|$)/, "#{lead}\\1\n").rstrip
+      else
+        "#{lead}#{line}"
+      end
     end * "\n"
   end
 
