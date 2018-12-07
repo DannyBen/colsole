@@ -103,7 +103,7 @@ module Colsole
     length -= lead.length
     text.split("\n").collect! do |line|
       if line.length > length
-        line.gsub!(/([^\s]{#{length}})([^\s+$])/, "\\1 \\2")
+        line.gsub!(/([^\s]{#{length}})([^\s$])/, "\\1 \\2")
         line.gsub(/(.{1,#{length}})(\s+|$)/, "#{lead}\\1\n").rstrip
       else
         "#{lead}#{line}"
