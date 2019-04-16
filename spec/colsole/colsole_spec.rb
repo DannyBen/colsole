@@ -70,6 +70,24 @@ describe Colsole do
         expect(command_exist? 'some_non_existing_command').to be false
       end
     end
+
+    context "with an existing command on windows" do
+      before :all do
+        @original_path = ENV['PATH']
+        system 'touch tmp/some-command.exe'
+        ENV['PATH'] = "./tmp:#{@original_path}"
+      end
+
+      after :all do
+        system 'rm tmp/some-command.exe'
+        ENV['PATH'] = @original_path
+      end
+
+      it "returns true" do
+        expect(command_exist? 'some-command').to be true
+      end
+    end
+
   end
 
   describe "#detect_terminal_size" do
