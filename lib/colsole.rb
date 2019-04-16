@@ -69,7 +69,9 @@ module Colsole
 
   # Determines if a shell command exists.
   def command_exist?(command)
-    ENV['PATH'].split(File::PATH_SEPARATOR).any? {|d| File.exist? File.join(d, command) }
+    ENV['PATH'].split(File::PATH_SEPARATOR).any? do |dir|
+      File.exist?(File.join dir, command) or File.exist?(File.join dir, "#{command}.exe")
+    end
   end
 
   # Returns [width, height] of terminal when detected, or a default
