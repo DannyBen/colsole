@@ -59,12 +59,12 @@ module Colsole
 
   # Returns true if stdout is interactive terminal
   def out_terminal?
-    STDOUT.tty?
+    $stdout.tty? or ENV['TTY']
   end
 
   # Returns true if stderr is interactive terminal
   def err_terminal?
-    STDERR.tty?
+    $stderr.tty? or ENV['TTY']
   end
 
   # Determines if a shell command exists.
