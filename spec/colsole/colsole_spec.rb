@@ -58,6 +58,36 @@ describe Colsole do
     end
   end
 
+  describe "#terminal?" do
+    context "when TTY environment is on" do
+      it "always returns true" do
+        prev_value = ENV['TTY']
+        ENV['TTY'] = 'on'
+        expect(terminal?).to be true
+        ENV['TTY'] = prev_value
+      end
+    end
+
+    context "when TTY environment is off" do
+      it "always returns false" do
+        prev_value = ENV['TTY']
+        ENV['TTY'] = 'off'
+        expect(terminal?).to be false
+        ENV['TTY'] = prev_value
+      end
+    end
+
+    context "when TTY environment is unset" do
+      it "refers to the stream" do
+        prev_value = ENV['TTY']
+        ENV['TTY'] = nil
+        expect($stdout).to receive(:tty?).and_return true
+        expect(terminal?).to be true
+        ENV['TTY'] = prev_value
+      end
+    end
+  end
+
   describe "#command_exist?" do
     context "with an existing command" do
       it "returns true" do
@@ -175,7 +205,7 @@ describe Colsole do
     end
   end
 
-  describe "#termina_width" do
+  describe "#terminal_width" do
     it "returns the first element of #detect_terminal_size" do
       expect(terminal_width).to eq detect_terminal_size[0]
     end
