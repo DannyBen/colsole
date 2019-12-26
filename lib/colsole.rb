@@ -23,10 +23,10 @@ module Colsole
   # Space terminated strings will leave the cursor at the same line.
   def say(text, force_color=false) 
     last = text[-1, 1]
-    if last == ' ' or last == '\t'
+    if terminal? and (last == ' ' or last == '\t')
       print colorize(text, force_color)
     else
-      print colorize("#{text}\n", force_color)
+      print colorize("#{text.rstrip}\n", force_color)
     end
   end
 
@@ -39,7 +39,7 @@ module Colsole
   # Erase the current output line, and say a new string.
   # This should be used after a space terminated say().
   def resay(text, force_color=false) 
-    terminal? and text = "\033[2K\r#{text}"
+    text = "\033[2K\r#{text}" if terminal?
     say text, force_color
   end
 
