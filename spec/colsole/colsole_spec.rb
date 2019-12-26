@@ -10,6 +10,15 @@ describe Colsole do
       it "stays on the same line" do
         expect{say 'hello '}.to output('hello ').to_stdout 
       end
+
+      context "when not in tty" do
+        before { @old_value = ENV['TTY']; ENV['TTY'] = 'off'}
+        after  { ENV['TTY'] = @old_value }
+
+        it "adds newline as if the text did not end with a space" do
+          expect{say 'hello '}.to output("hello\n").to_stdout 
+        end        
+      end
     end
 
     context "with color markers" do

@@ -26,7 +26,7 @@ module Colsole
     if terminal? and (last == ' ' or last == '\t')
       print colorize(text, force_color)
     else
-      print colorize("#{text}\n", force_color)
+      print colorize("#{text.rstrip}\n", force_color)
     end
   end
 
