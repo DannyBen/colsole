@@ -16,7 +16,7 @@ describe Colsole do
         after  { ENV['TTY'] = @old_value }
 
         it "adds newline as if the text did not end with a space" do
-          expect{say 'hello '}.to output("hello\n").to_stdout 
+          expect{say 'hello '}.to output("hello \n").to_stdout 
         end        
       end
     end
