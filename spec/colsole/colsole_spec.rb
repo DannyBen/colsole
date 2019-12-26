@@ -12,7 +12,7 @@ describe Colsole do
       end
 
       context "when not in tty" do
-        before { @old_value = ENV['TTY']; ENV['TTY'] = 'off'}
+        before { @old_value = ENV['TTY']; ENV['TTY'] = 'off' }
         after  { ENV['TTY'] = @old_value }
 
         it "adds newline as if the text did not end with a space" do
