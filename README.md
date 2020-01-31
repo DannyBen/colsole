@@ -2,9 +2,8 @@ Colsole
 ==================================================
 
 [![Gem Version](https://badge.fury.io/rb/colsole.svg)](https://badge.fury.io/rb/colsole)
-[![Build Status](https://travis-ci.com/DannyBen/colsole.svg?branch=master)](https://travis-ci.com/DannyBen/colsole)
+[![Build Status](https://github.com/DannyBen/colsole/workflows/Test/badge.svg)](https://github.com/DannyBen/colsole/actions?query=workflow%3ATest)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0556015f7cd2080531a1/maintainability)](https://codeclimate.com/github/DannyBen/colsole/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/0556015f7cd2080531a1/test_coverage)](https://codeclimate.com/github/DannyBen/colsole/test_coverage)
 
 ---
 
