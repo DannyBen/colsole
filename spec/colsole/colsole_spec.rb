@@ -261,7 +261,7 @@ describe Colsole do
 
     context "without arguments" do
       it "outputs a demo string" do
-        expected = /txtblk = .*m 33 bottles of beer on the wall .*m\n/
+        expected = /txtblk = .*m 36 bottles of beer on the wall .*m\n/
         expect{colorize}.to output(expected).to_stdout
       end
     end
