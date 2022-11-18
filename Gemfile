@@ -1,11 +1,10 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-group :development do
-  gem 'runfile'
-  gem 'runfile-tasks'
-  gem 'rspec'
-  gem 'simplecov'
-  gem 'byebug'
-end
+gem 'byebug'
+gem 'rentacop'
+gem 'rspec'
+gem 'runfile'
+gem 'runfile-tasks'
+gem 'simplecov'
 
 gemspec

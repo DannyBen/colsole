@@ -1,0 +1,38 @@
+inherit_from: .rubocop_todo.yml
+
+inherit_gem:
+  rentacop: rentacop.yml
+
+AllCops:
+  TargetRubyVersion: 2.6
+  SuggestExtensions: false
+  Exclude:
+    - 'example.rb'
+
+# Allow `$stderr.puts`, we don't want `warn`
+Style/StderrPuts:
+  Exclude:
+    - 'lib/colsole.rb'
+
+# Allow optional boolean parameter as a non-keyword argument.
+# Changing this breaks the interface
+Style/OptionalBooleanParameter:
+  Exclude:
+    - 'lib/colsole.rb'
+
+# Allow the module to be longer
+Metrics/ModuleLength:
+  Max: 124
+
+# The `detect_terminal_size` is more complex, let it be
+Metrics/AbcSize:
+  AllowedMethods:
+    - detect_terminal_size
+
+Metrics/CyclomaticComplexity:
+  AllowedMethods:
+    - detect_terminal_size
+
+Metrics/PerceivedComplexity:
+  AllowedMethods:
+    - detect_terminal_size
