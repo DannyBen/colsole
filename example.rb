@@ -2,17 +2,17 @@
 require_relative 'lib/colsole'
 
 # colored output (respects pipe)
-say "!txtblu!Hello !txtred!World"
+say '!txtblu!Hello !txtred!World'
 
 # partial messages
-say "Downloading... "
+say 'Downloading... '
 sleep 1
-say "!txtgrn!Downloaded"
+say '!txtgrn!Downloaded'
 
 # rewriting messages
-say "Compiling... "
+say 'Compiling... '
 sleep 1
-resay "!txtgrn!Done"
+resay '!txtgrn!Done'
 sleep 1
 
 # wrap long lines with indentation
@@ -31,7 +31,7 @@ say word_wrap("        #{poem}", 30)
 sleep 1
 
 # say to STDERR
-say! "!txtred!Error: Failed to fail"
+say! '!txtred!Error: Failed to fail'
 sleep 1
 
 # say status

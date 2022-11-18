@@ -1,14 +1,14 @@
-require "colsole/version"
+require 'colsole/version'
 
 # Colsole - Colorful Console Applications
 #
-# This class provides several utility functions for console application 
+# This class provides several utility functions for console application
 # developers.
 #
 # - #colorize string - return a colorized strings
-# - #say string - print a string with colors  
+# - #say string - print a string with colors
 # - #say! string - print a string with colors to stderr
-# - #resay string - same as say, but overwrite current line  
+# - #resay string - same as say, but overwrite current line
 # - #say_status symbol, string [, color] - print a message with status
 # - #word_wrap string - wrap a string and maintain indentation
 # - #detect_terminal_size
@@ -23,7 +23,7 @@ module Colsole
   # Space terminated strings will leave the cursor at the same line.
   def say(text, force_color = false)
     last = text[-1, 1]
-    if terminal? and (last == ' ' or last == '\t')
+    if terminal? && ((last == ' ') || (last == '\t'))
       print colorize(text, force_color)
     else
       print colorize("#{text}\n", force_color)
@@ -59,12 +59,22 @@ module Colsole
 
   # Returns true if stdout is interactive terminal
   def out_terminal?
-    ENV['TTY'] == 'on' ? true : ENV['TTY'] == 'off' ? false : $stdout.tty?
+    case ENV['TTY']
+    when 'on'  then true
+    when 'off' then false
+    else
+      $stdout.tty?
+    end
   end
 
   # Returns true if stderr is interactive terminal
   def err_terminal?
-    ENV['TTY'] == 'on' ? true : ENV['TTY'] == 'off' ? false : $stderr.tty?
+    case ENV['TTY']
+    when 'on'  then true
+    when 'off' then false
+    else
+      $stderr.tty?
+    end
   end
 
   # Determines if a shell command exists.
@@ -76,17 +86,21 @@ module Colsole
 
   # Returns [width, height] of terminal when detected, or a default
   # value otherwise.
-  def detect_terminal_size(default = [80,30])
-    if (ENV['COLUMNS'] =~ /^\d+$/) && (ENV['LINES'] =~ /^\d+$/)
-      result = [ENV['COLUMNS'].to_i, ENV['LINES'].to_i]
-    elsif (RUBY_PLATFORM =~ /java/ || (!STDIN.tty? && ENV['TERM'])) && command_exist?('tput')
-      result = [`tput cols 2>&1`.to_i, `tput lines 2>&1`.to_i]
-    elsif STDIN.tty? && command_exist?('stty')
-      result = `stty size 2>&1`.scan(/\d+/).map { |s| s.to_i }.reverse
+  def detect_terminal_size(default = [80, 30])
+    result = if (ENV['COLUMNS'] =~ /^\d+$/) && (ENV['LINES'] =~ /^\d+$/)
+      [ENV['COLUMNS'].to_i, ENV['LINES'].to_i]
+    elsif (RUBY_PLATFORM =~ /java/ || (!$stdin.tty? && ENV['TERM'])) && command_exist?('tput')
+      [`tput cols 2>&1`.to_i, `tput lines 2>&1`.to_i]
+    elsif $stdin.tty? && command_exist?('stty')
+      `stty size 2>&1`.scan(/\d+/).map(&:to_i).reverse
     else
+      default
+    end
+
+    unless result[0].is_a?(Integer) && result[1].is_a?(Integer) && result[0].positive? && result[1].positive?
       result = default
     end
-    result = default unless result[0].is_a? Integer and result[1].is_a? Integer and result[0] > 0 and result[1] > 0
+
     result
   end
 
@@ -96,7 +110,7 @@ module Colsole
   end
 
   # Converts a long string to be wrapped keeping words in tact.
-  # If the string starts with one or more spaces, they will be 
+  # If the string starts with one or more spaces, they will be
   # preserved in all subsequent lines (i.e., remain indented).
   def word_wrap(text, length = nil)
     length ||= terminal_width
@@ -105,7 +119,7 @@ module Colsole
     length -= lead.length
     text.split("\n").collect! do |line|
       if line.length > length
-        line.gsub!(/([^\s]{#{length}})([^\s$])/, "\\1 \\2")
+        line.gsub!(/([^\s]{#{length}})([^\s$])/, '\\1 \\2')
         line.gsub(/(.{1,#{length}})(\s+|$)/, "#{lead}\\1\n").rstrip
       else
         "#{lead}#{line}"
@@ -119,6 +133,7 @@ module Colsole
   def colorize(text = nil, force_color = false, stream = :stdout)
     return show_color_demo if text.nil?
     return strip_color_markers(text) unless terminal?(stream) || force_color
+
     colorize! text
   end
 
@@ -132,11 +147,11 @@ private
     reset = colors['txtrst']
     reset_called_last = true
 
-    out = text.gsub(/\!([a-z]{6})\!/) do |m|
-      reset_called_last = $1 == "txtrst"
+    out = text.gsub(/!([a-z]{6})!/) do
+      reset_called_last = $1 == 'txtrst'
       colors[$1]
     end
-    
+
     reset_called_last or out = "#{out}#{reset}"
     out
   end
@@ -167,14 +182,13 @@ private
 
   def show_color_demo
     i = colors.count
-    colors.keys.each do |k| 
+    colors.each_key do |k|
       puts colorize "#{k} = !#{k}! #{i} bottles of beer on the wall !txtrst!"
       i -= 1
     end
   end
 
   def strip_color_markers(text)
-    text.gsub(/\!([a-z]{6})\!/, '')
+    text.gsub(/!([a-z]{6})!/, '')
   end
-
 end
