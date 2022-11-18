@@ -102,6 +102,36 @@ describe Colsole do
         ENV['TTY'] = prev_value
       end
     end
+
+    context "with :stderr parameter" do
+      context 'when TTY environment is on' do
+        it 'always returns true' do
+          prev_value = ENV['TTY']
+          ENV['TTY'] = 'on'
+          expect(terminal? :stderr).to be true
+          ENV['TTY'] = prev_value
+        end
+      end
+
+      context 'when TTY environment is off' do
+        it 'always returns false' do
+          prev_value = ENV['TTY']
+          ENV['TTY'] = 'off'
+          expect(terminal? :stderr).to be false
+          ENV['TTY'] = prev_value
+        end
+      end
+
+      context 'when TTY environment is unset' do
+        it 'refers to the stream' do
+          prev_value = ENV['TTY']
+          ENV['TTY'] = nil
+          expect($stderr).to receive(:tty?).and_return true
+          expect(terminal? :stderr).to be true
+          ENV['TTY'] = prev_value
+        end
+      end
+    end
   end
 
   describe '#command_exist?' do
