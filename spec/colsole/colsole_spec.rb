@@ -12,12 +12,10 @@ describe Colsole do
       end
 
       context 'when not in tty' do
-        before do
-          @old_value = ENV['TTY']
-          ENV['TTY'] = 'off'
-        end
+        old_value = ENV['TTY']
 
-        after { ENV['TTY'] = @old_value }
+        before { ENV['TTY'] = 'off' }
+        after { ENV['TTY'] = old_value }
 
         it 'adds newline as if the text did not end with a space' do
           expect { say 'hello ' }.to output("hello \n").to_stdout
@@ -97,13 +95,13 @@ describe Colsole do
       it 'refers to the stream' do
         prev_value = ENV['TTY']
         ENV['TTY'] = nil
-        expect($stdout).to receive(:tty?).and_return true
+        allow($stdout).to receive(:tty?).and_return true
         expect(terminal?).to be true
         ENV['TTY'] = prev_value
       end
     end
 
-    context "with :stderr parameter" do
+    context 'with :stderr parameter' do
       context 'when TTY environment is on' do
         it 'always returns true' do
           prev_value = ENV['TTY']
@@ -126,7 +124,7 @@ describe Colsole do
         it 'refers to the stream' do
           prev_value = ENV['TTY']
           ENV['TTY'] = nil
-          expect($stderr).to receive(:tty?).and_return true
+          allow($stderr).to receive(:tty?).and_return true
           expect(terminal? :stderr).to be true
           ENV['TTY'] = prev_value
         end
@@ -148,15 +146,16 @@ describe Colsole do
     end
 
     context 'with an existing command on windows' do
+      original_path = ENV['PATH']
+
       before :all do
-        @original_path = ENV['PATH']
         system 'touch tmp/some-command.exe'
-        ENV['PATH'] = "./tmp:#{@original_path}"
+        ENV['PATH'] = "./tmp:#{original_path}"
       end
 
       after :all do
         system 'rm tmp/some-command.exe'
-        ENV['PATH'] = @original_path
+        ENV['PATH'] = original_path
       end
 
       it 'returns true' do
@@ -167,12 +166,12 @@ describe Colsole do
 
   describe '#detect_terminal_size' do
     context 'when COLUMNS and LINES are set' do
+      subject { detect_terminal_size }
+
       before do
         ENV['COLUMNS'] = '44'
         ENV['LINES'] = '11'
       end
-
-      subject { detect_terminal_size }
 
       it 'returns the size from the environment' do
         expect(subject[0]).to eq 44
@@ -190,11 +189,11 @@ describe Colsole do
         subject { detect_terminal_size }
 
         before do
-          expect($stdin).to receive(:tty?).and_return false
+          allow($stdin).to receive(:tty?).and_return false
           ENV['TERM'] ||= 'linux'
-          expect(self).to receive(:command_exist?).with('tput').and_return true
-          expect(self).to receive(:`).with('tput cols 2>&1').and_return 44
-          expect(self).to receive(:`).with('tput lines 2>&1').and_return 33
+          allow(self).to receive(:command_exist?).with('tput').and_return true
+          allow(self).to receive(:`).with('tput cols 2>&1').and_return 44
+          allow(self).to receive(:`).with('tput lines 2>&1').and_return 33
         end
 
         it 'returns the size' do
@@ -207,9 +206,9 @@ describe Colsole do
         subject { detect_terminal_size }
 
         before do
-          expect($stdin).to receive(:tty?).twice.and_return true
-          expect(self).to receive(:command_exist?).with('stty').and_return true
-          expect(self).to receive(:`).with('stty size 2>&1').and_return '12 66'
+          allow($stdin).to receive(:tty?).twice.and_return true
+          allow(self).to receive(:command_exist?).with('stty').and_return true
+          allow(self).to receive(:`).with('stty size 2>&1').and_return '12 66'
         end
 
         it 'returns the size' do
@@ -222,8 +221,8 @@ describe Colsole do
         subject { detect_terminal_size [55, 33] }
 
         before do
-          expect($stdin).to receive(:tty?).twice.and_return true
-          expect(self).to receive(:command_exist?).with('stty').and_return false
+          allow($stdin).to receive(:tty?).twice.and_return true
+          allow(self).to receive(:command_exist?).with('stty').and_return false
         end
 
         it 'returns the default size' do
@@ -236,9 +235,9 @@ describe Colsole do
         subject { detect_terminal_size [55, 33] }
 
         before do
-          expect($stdin).to receive(:tty?).twice.and_return true
-          expect(self).to receive(:command_exist?).with('stty').and_return true
-          expect(self).to receive(:`).with('stty size 2>&1').and_return 'invalid-values'
+          allow($stdin).to receive(:tty?).twice.and_return true
+          allow(self).to receive(:command_exist?).with('stty').and_return true
+          allow(self).to receive(:`).with('stty size 2>&1').and_return 'invalid-values'
         end
 
         it 'returns the default size' do
@@ -287,7 +286,7 @@ describe Colsole do
 
     context 'when the stream is not a terminal' do
       it 'strips colors' do
-        expect(self).to receive(:terminal?).and_return false
+        allow(self).to receive(:terminal?).and_return false
         expected = 'hello world'
         expect(colorize '!txtblu!hello!txtrst! world').to eq expected
       end

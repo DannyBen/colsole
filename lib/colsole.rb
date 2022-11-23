@@ -89,7 +89,7 @@ module Colsole
   def detect_terminal_size(default = [80, 30])
     result = if (ENV['COLUMNS'] =~ /^\d+$/) && (ENV['LINES'] =~ /^\d+$/)
       [ENV['COLUMNS'].to_i, ENV['LINES'].to_i]
-    elsif (RUBY_PLATFORM =~ /java/ || (!$stdin.tty? && ENV['TERM'])) && command_exist?('tput')
+    elsif (RUBY_PLATFORM.include?('java') || (!$stdin.tty? && ENV['TERM'])) && command_exist?('tput')
       [`tput cols 2>&1`.to_i, `tput lines 2>&1`.to_i]
     elsif $stdin.tty? && command_exist?('stty')
       `stty size 2>&1`.scan(/\d+/).map(&:to_i).reverse
