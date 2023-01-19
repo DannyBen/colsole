@@ -125,7 +125,8 @@ private
     text = "\033[2K\r#{text}" if replace && terminal?
     last = text[-1, 1]
     handler = use_colors?(stream) ? :colorize : :strip_colors
-    if ((last == ' ') || (last == '\t'))
+    
+    if terminal? && ((last == ' ') || (last == '\t'))
       stream.print send(handler, text)
     else
       stream.print send(handler, "#{text}\n")

@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 require:
   - rubocop-performance
   - rubocop-rspec
@@ -23,20 +25,3 @@ Style/StderrPuts:
 Style/OptionalBooleanParameter:
   Exclude:
     - 'lib/colsole.rb'
-
-# Allow the module to be longer
-Metrics/ModuleLength:
-  Max: 124
-
-# The `detect_terminal_size` is more complex, let it be
-Metrics/AbcSize:
-  AllowedMethods:
-    - detect_terminal_size
-
-Metrics/CyclomaticComplexity:
-  AllowedMethods:
-    - detect_terminal_size
-
-Metrics/PerceivedComplexity:
-  AllowedMethods:
-    - detect_terminal_size

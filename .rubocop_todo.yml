@@ -1,0 +1,77 @@
+# Offense count: 1
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: AllowForAlignment, AllowBeforeTrailingComments, ForceEqualSignAlignment.
+Layout/ExtraSpacing:
+  Exclude:
+    - 'lib/colsole.rb'
+
+# Offense count: 1
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: AllowForAlignment, EnforcedStyleForExponentOperator.
+# SupportedStylesForExponentOperator: space, no_space
+Layout/SpaceAroundOperators:
+  Exclude:
+    - 'lib/colsole.rb'
+
+# Offense count: 1
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: final_newline, final_blank_line
+Layout/TrailingEmptyLines:
+  Exclude:
+    - 'dev/test.rb'
+
+# Offense count: 1
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: AllowInHeredoc.
+Layout/TrailingWhitespace:
+  Exclude:
+    - 'lib/colsole.rb'
+
+# Offense count: 1
+# This cop supports safe autocorrection (--autocorrect).
+Lint/AmbiguousRegexpLiteral:
+  Exclude:
+    - 'lib/colsole.rb'
+
+# Offense count: 1
+# Configuration parameters: CountComments, CountAsOne.
+Metrics/ModuleLength:
+  Max: 112
+
+# Offense count: 1
+Style/MixinUsage:
+  Exclude:
+    - 'bin/*'
+    - 'spec/spec_helper.rb'
+    - 'dev/test.rb'
+
+# Offense count: 4
+# Configuration parameters: AllowedMethods.
+# AllowedMethods: respond_to_missing?
+Style/OptionalBooleanParameter:
+  Exclude:
+    - 'lib/colsole.rb'
+    - 'dev/colsole.rb'
+
+# Offense count: 3
+# This cop supports safe autocorrection (--autocorrect).
+Style/RedundantRegexpEscape:
+  Exclude:
+    - 'lib/colsole.rb'
+
+# Offense count: 1
+# This cop supports safe autocorrection (--autocorrect).
+Style/StderrPuts:
+  Exclude:
+    - 'lib/colsole.rb'
+    - 'dev/colsole.rb'
+
+# Offense count: 2
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: EnforcedStyle, ConsistentQuotesInMultiline.
+# SupportedStyles: single_quotes, double_quotes
+Style/StringLiterals:
+  Exclude:
+    - 'dev/test.rb'
+    - 'spec/colsole/colsole_spec.rb'

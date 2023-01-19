@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Colsole do
   describe '#say' do
     it 'prints the message' do
@@ -25,9 +23,20 @@ describe Colsole do
 
     context 'with color markers' do
       it 'prints ansi colors' do
-        expect { say '!txtgrn!hello' }.to output("\e[0;32mhello\n\e[0m").to_stdout
+        expect { say 'g`hello` w`world`' }
+          .to output("\e[32mhello\e[0m w`world`\n").to_stdout
       end
     end
+
+    context 'with replace: true' do
+      it 'overwrites the current line' do
+        expect do
+          say 'go '
+          say 'home', replace: true
+        end.to output("go \e[2K\rhome\n").to_stdout
+      end
+    end
+
   end
 
   describe '#say!' do
@@ -37,37 +46,8 @@ describe Colsole do
 
     context 'with color markers' do
       it 'prints ansi colors' do
-        expect { say! '!txtgrn!hello' }.to output("\e[0;32mhello\e[0m\n").to_stderr
-      end
-    end
-  end
-
-  describe '#resay' do
-    it 'overwrites the current line' do
-      expect do
-        say 'go '
-        resay 'home'
-      end.to output("go \e[2K\rhome\n").to_stdout
-    end
-  end
-
-  describe '#say_status' do
-    it 'prints a colorful status message' do
-      expected = "\e[0;32m      create \e[0m hello\n"
-      expect { say_status :create, 'hello' }.to output(expected).to_stdout
-    end
-
-    context 'with an explicit color' do
-      it 'prints a colorful status message' do
-        expected = "\e[0;31m      create \e[0m hello\n"
-        expect { say_status :create, 'hello', :txtred }.to output(expected).to_stdout
-      end
-    end
-
-    context 'without a message' do
-      it 'uses a different default color' do
-        expected = "\e[0;34m      create \e[0m\n"
-        expect { say_status :create }.to output(expected).to_stdout
+        expect { say! 'g`hello` w`world`' }
+          .to output("\e[32mhello\e[0m w`world`\n").to_stderr
       end
     end
   end
@@ -101,12 +81,12 @@ describe Colsole do
       end
     end
 
-    context 'with :stderr parameter' do
+    context 'with $stderr parameter' do
       context 'when TTY environment is on' do
         it 'always returns true' do
           prev_value = ENV['TTY']
           ENV['TTY'] = 'on'
-          expect(terminal? :stderr).to be true
+          expect(terminal? $stderr).to be true
           ENV['TTY'] = prev_value
         end
       end
@@ -115,7 +95,7 @@ describe Colsole do
         it 'always returns false' do
           prev_value = ENV['TTY']
           ENV['TTY'] = 'off'
-          expect(terminal? :stderr).to be false
+          expect(terminal? $stderr).to be false
           ENV['TTY'] = prev_value
         end
       end
@@ -125,7 +105,7 @@ describe Colsole do
           prev_value = ENV['TTY']
           ENV['TTY'] = nil
           allow($stderr).to receive(:tty?).and_return true
-          expect(terminal? :stderr).to be true
+          expect(terminal? $stderr).to be true
           ENV['TTY'] = prev_value
         end
       end
@@ -164,10 +144,10 @@ describe Colsole do
     end
   end
 
-  describe '#detect_terminal_size' do
-    context 'when COLUMNS and LINES are set' do
-      subject { detect_terminal_size }
+  describe '#terminal_size' do
+    subject { terminal_size }
 
+    context 'when COLUMNS and LINES are set' do
       before do
         ENV['COLUMNS'] = '44'
         ENV['LINES'] = '11'
@@ -185,59 +165,18 @@ describe Colsole do
         ENV['LINES'] = nil
       end
 
-      context 'when using tput' do
-        subject { detect_terminal_size }
-
-        before do
-          allow($stdin).to receive(:tty?).and_return false
-          ENV['TERM'] ||= 'linux'
-          allow(self).to receive(:command_exist?).with('tput').and_return true
-          allow(self).to receive(:`).with('tput cols 2>&1').and_return 44
-          allow(self).to receive(:`).with('tput lines 2>&1').and_return 33
-        end
-
-        it 'returns the size' do
-          expect(subject[0]).to eq 44
-          expect(subject[1]).to eq 33
-        end
+      it 'refers to $stdout.winsize' do
+        expected = $stdout.winsize.reverse
+        expect(subject).to match_array([Integer, Integer])
+        expect(subject[0]).to eq expected[0]
+        expect(subject[1]).to eq expected[1]
       end
 
-      context 'when using stty' do
-        subject { detect_terminal_size }
+      context 'when it cannot detect size' do
+        subject { terminal_size [55, 33] }
 
         before do
-          allow($stdin).to receive(:tty?).twice.and_return true
-          allow(self).to receive(:command_exist?).with('stty').and_return true
-          allow(self).to receive(:`).with('stty size 2>&1').and_return '12 66'
-        end
-
-        it 'returns the size' do
-          expect(subject[0]).to eq 66
-          expect(subject[1]).to eq 12
-        end
-      end
-
-      context 'when cannot detect size' do
-        subject { detect_terminal_size [55, 33] }
-
-        before do
-          allow($stdin).to receive(:tty?).twice.and_return true
-          allow(self).to receive(:command_exist?).with('stty').and_return false
-        end
-
-        it 'returns the default size' do
-          expect(subject[0]).to eq 55
-          expect(subject[1]).to eq 33
-        end
-      end
-
-      context 'when result is not a number' do
-        subject { detect_terminal_size [55, 33] }
-
-        before do
-          allow($stdin).to receive(:tty?).twice.and_return true
-          allow(self).to receive(:command_exist?).with('stty').and_return true
-          allow(self).to receive(:`).with('stty size 2>&1').and_return 'invalid-values'
+          allow($stdout).to receive(:winsize).and_return [nil, nil]
         end
 
         it 'returns the default size' do
@@ -250,7 +189,13 @@ describe Colsole do
 
   describe '#terminal_width' do
     it 'returns the first element of #detect_terminal_size' do
-      expect(terminal_width).to eq detect_terminal_size[0]
+      expect(terminal_width).to eq terminal_size[0]
+    end
+  end
+
+  describe '#terminal_height' do
+    it 'returns the second element of #detect_terminal_size' do
+      expect(terminal_height).to eq terminal_size[1]
     end
   end
 
@@ -280,23 +225,13 @@ describe Colsole do
 
   describe '#colorize' do
     it 'returns an ansi-colored string' do
-      expected = "\e[0;34mhello\e[0m world"
-      expect(colorize '!txtblu!hello!txtrst! world').to eq expected
+      expect(colorize 'b`hello` g`world`').to eq "\e[34mhello\e[0m \e[32mworld\e[0m"
     end
+  end
 
-    context 'when the stream is not a terminal' do
-      it 'strips colors' do
-        allow(self).to receive(:terminal?).and_return false
-        expected = 'hello world'
-        expect(colorize '!txtblu!hello!txtrst! world').to eq expected
-      end
-    end
-
-    context 'without arguments' do
-      it 'outputs a demo string' do
-        expected = /txtblk = .*m 36 bottles of beer on the wall .*m\n/
-        expect { colorize }.to output(expected).to_stdout
-      end
+  describe '#strip_colors' do
+    it 'returns a strin without colsole color markers' do
+      expect(strip_colors 'b`hello` g`world`').to eq "hello world"
     end
   end
 end
