@@ -164,7 +164,7 @@ describe Colsole do
       end
 
       it 'refers to $stdout.winsize' do
-        expected = $stdout.winsize.reverse
+        expected = safe_get_tty_size
         expect(subject).to match_array([Integer, Integer])
         expect(subject).to eq expected
       end

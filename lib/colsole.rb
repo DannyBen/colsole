@@ -133,7 +133,7 @@ private
     end
   end
 
-  def safe_get_tty_size(default)
+  def safe_get_tty_size(default = [80, 30])
     $stdout.winsize.reverse
   rescue Errno::ENOTTY
     default
