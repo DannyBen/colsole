@@ -153,8 +153,7 @@ describe Colsole do
       end
 
       it 'returns the size from the environment' do
-        expect(subject[0]).to eq 44
-        expect(subject[1]).to eq 11
+        expect(subject).to eq [44, 11]
       end
     end
 
@@ -167,8 +166,7 @@ describe Colsole do
       it 'refers to $stdout.winsize' do
         expected = $stdout.winsize.reverse
         expect(subject).to match_array([Integer, Integer])
-        expect(subject[0]).to eq expected[0]
-        expect(subject[1]).to eq expected[1]
+        expect(subject).to eq expected
       end
 
       context 'when it cannot detect size' do
@@ -179,8 +177,19 @@ describe Colsole do
         end
 
         it 'returns the default size' do
-          expect(subject[0]).to eq 55
-          expect(subject[1]).to eq 33
+          expect(subject).to eq [55, 33]
+        end
+      end
+
+      context 'when $stdout.winsize raises Errno::ENOTTY' do
+        subject { terminal_size [55, 33] }
+
+        before do
+          allow($stdout).to receive(:winsize).and_raise(Errno::ENOTTY)
+        end
+
+        it 'returns the default values' do
+          expect(subject).to eq [55, 33]
         end
       end
     end

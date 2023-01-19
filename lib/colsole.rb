@@ -60,7 +60,7 @@ module Colsole
     result = if (ENV['COLUMNS'] =~ /^\d+$/) && (ENV['LINES'] =~ /^\d+$/)
       [ENV['COLUMNS'].to_i, ENV['LINES'].to_i]
     else
-      $stdout.winsize.reverse
+      safe_get_tty_size default
     end
 
     unless result[0].is_a?(Integer) && result[1].is_a?(Integer) && result[0].positive? && result[1].positive?
@@ -131,5 +131,11 @@ private
     else
       stream.print send(handler, "#{text}\n")
     end
+  end
+
+  def safe_get_tty_size(default)
+    $stdout.winsize.reverse
+  rescue Errno::ENOTTY
+    default
   end
 end
