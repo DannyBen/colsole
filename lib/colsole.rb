@@ -2,7 +2,7 @@ require 'io/console'
 
 # Utility methods for console applications
 module Colsole
-  ANSI_COLORS =  {
+  ANSI_COLORS = {
     'n' => "\e[30m", # no color
     'r' => "\e[31m", # red
     'g' => "\e[32m", # green
@@ -113,7 +113,7 @@ module Colsole
 private
 
   def process_color_markers(string)
-    string.gsub /([rgybmcn])([ubi]{0,3})\`([^\`]*)\`/ do
+    string.gsub(/([rgybmcn])([ubi]{0,3})`([^`]*)`/) do
       color = ANSI_COLORS[$1]
       styles = $2.chars.map { |a| ANSI_STYLES[a] }.join
       text = $3
@@ -125,7 +125,7 @@ private
     text = "\033[2K\r#{text}" if replace && terminal?
     last = text[-1, 1]
     handler = use_colors?(stream) ? :colorize : :strip_colors
-    
+
     if terminal? && ((last == ' ') || (last == '\t'))
       stream.print send(handler, text)
     else

@@ -36,7 +36,6 @@ describe Colsole do
         end.to output("go \e[2K\rhome\n").to_stdout
       end
     end
-
   end
 
   describe '#say!' do
@@ -231,7 +230,7 @@ describe Colsole do
 
   describe '#strip_colors' do
     it 'returns a strin without colsole color markers' do
-      expect(strip_colors 'b`hello` g`world`').to eq "hello world"
+      expect(strip_colors 'b`hello` g`world`').to eq 'hello world'
     end
   end
 end
