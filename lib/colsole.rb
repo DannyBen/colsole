@@ -143,7 +143,7 @@ private
   end
 
   def safe_get_tty_size(default = [80, 30])
-    $stdout.winsize.reverse
+    IO.console.winsize.reverse
   rescue Errno::ENOTTY
     default
   end

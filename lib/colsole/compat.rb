@@ -2,6 +2,10 @@
 # for compatibility with older versions of colsole.
 # Do not use these methods directly.
 module Colsole
+  def detect_terminal_size(*args)
+    terminal_size(*args)
+  end
+
   def old_colorize(text)
     reset = colors['txtrst']
     reset_called_last = true

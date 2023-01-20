@@ -74,7 +74,7 @@ describe Colsole do
       it 'refers to the stream' do
         prev_value = ENV['TTY']
         ENV['TTY'] = nil
-        allow($stdout).to receive(:tty?).and_return true
+        allow(IO.console).to receive(:tty?).and_return true
         expect(terminal?).to be true
         ENV['TTY'] = prev_value
       end
@@ -163,7 +163,7 @@ describe Colsole do
         ENV['LINES'] = nil
       end
 
-      it 'refers to $stdout.winsize' do
+      it 'refers to IO.console.winsize' do
         expected = safe_get_tty_size
         expect(subject).to match_array([Integer, Integer])
         expect(subject).to eq expected
@@ -173,7 +173,7 @@ describe Colsole do
         subject { terminal_size [55, 33] }
 
         before do
-          allow($stdout).to receive(:winsize).and_return [nil, nil]
+          allow(IO.console).to receive(:winsize).and_return [nil, nil]
         end
 
         it 'returns the default size' do
@@ -185,7 +185,7 @@ describe Colsole do
         subject { terminal_size [55, 33] }
 
         before do
-          allow($stdout).to receive(:winsize).and_raise(Errno::ENOTTY)
+          allow(IO.console).to receive(:winsize).and_raise(Errno::ENOTTY)
         end
 
         it 'returns the default values' do
