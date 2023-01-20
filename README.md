@@ -9,8 +9,8 @@
 Utility functions for colorful console applications.
 
 > **Upgrade Note**
-> This README is for the latest version of colsole, which is compatible with
-> older versions. Version 1.x will NOT be compatible.
+> This README is for the latest version of colsole (0.8.x), which is compatible
+> with older versions. Version 1.x will NOT be compatible.  
 > See [Uprading](#upgrading) below.
 
 ## Install
@@ -149,11 +149,11 @@ Follow these steps to upgrade:
 
 ```ruby
 
-# => Require a more flexible version.
+# => Require a more flexible version
 # change this
 gem 'colsole'
 # to this (to avoid conflicts with other gems that require 0.x)
-gem 'colsole', '>= 0.8.0', '< 2.0'
+gem 'colsole', '>= 0.7.0', '< 2.0'
 
 # => Remove 'say_status'
 # It will no longer be supported in 1.0.0
