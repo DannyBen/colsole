@@ -75,6 +75,7 @@ describe Colsole do
         prev_value = ENV['TTY']
         ENV['TTY'] = nil
         allow($stdout).to receive(:tty?).and_return true
+        
         expect(terminal?).to be true
         ENV['TTY'] = prev_value
       end
@@ -163,7 +164,7 @@ describe Colsole do
         ENV['LINES'] = nil
       end
 
-      it 'refers to $stdout.winsize' do
+      it 'refers to winsize' do
         expected = safe_get_tty_size
         expect(subject).to match_array([Integer, Integer])
         expect(subject).to eq expected
@@ -172,8 +173,11 @@ describe Colsole do
       context 'when it cannot detect size' do
         subject { terminal_size [55, 33] }
 
+        let(:console_mock) { double IO, winsize: [nil, nil]}
+
         before do
-          allow($stdout).to receive(:winsize).and_return [nil, nil]
+          allow(IO).to receive(:console).and_return console_mock
+          allow(console_mock).to receive(:winsize).and_return [nil, nil]
         end
 
         it 'returns the default size' do
@@ -184,8 +188,11 @@ describe Colsole do
       context 'when $stdout.winsize raises Errno::ENOTTY' do
         subject { terminal_size [55, 33] }
 
+        let(:console_mock) { double IO, winsize: nil}
+
         before do
-          allow($stdout).to receive(:winsize).and_raise(Errno::ENOTTY)
+          allow(IO).to receive(:console).and_return console_mock
+          allow(console_mock).to receive(:winsize).and_raise(Errno::ENOTTY)
         end
 
         it 'returns the default values' do
