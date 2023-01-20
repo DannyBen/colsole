@@ -24,3 +24,13 @@ Style/StderrPuts:
 Style/OptionalBooleanParameter:
   Exclude:
     - 'lib/colsole.rb'
+
+# TODO: Remove when compatibility layer is removed
+RSpec/FilePath:
+  Exclude:
+    - spec/colsole/compat_spec.rb
+
+# TODO: Remove when compatibility layer is removed
+Metrics/ModuleLength:
+  Exclude:
+    - lib/colsole.rb
