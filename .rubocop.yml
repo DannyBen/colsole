@@ -9,9 +9,10 @@ inherit_gem:
 
 AllCops:
   TargetRubyVersion: 2.6
-  SuggestExtensions: false
   Exclude:
-    - 'example.rb'
+    - example.rb
+    - dev/**/*
+    - debug.rb
 
 # Allow `$stderr.puts`, we don't want `warn`
 Style/StderrPuts:
@@ -24,19 +25,12 @@ Style/OptionalBooleanParameter:
   Exclude:
     - 'lib/colsole.rb'
 
-# Allow the module to be longer
+# TODO: Remove when compatibility layer is removed
+RSpec/FilePath:
+  Exclude:
+    - spec/colsole/compat_spec.rb
+
+# TODO: Remove when compatibility layer is removed
 Metrics/ModuleLength:
-  Max: 124
-
-# The `detect_terminal_size` is more complex, let it be
-Metrics/AbcSize:
-  AllowedMethods:
-    - detect_terminal_size
-
-Metrics/CyclomaticComplexity:
-  AllowedMethods:
-    - detect_terminal_size
-
-Metrics/PerceivedComplexity:
-  AllowedMethods:
-    - detect_terminal_size
+  Exclude:
+    - lib/colsole.rb

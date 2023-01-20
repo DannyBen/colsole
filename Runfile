@@ -1,4 +1,6 @@
+require 'colsole'
 require "runfile-tasks"
+include Colsole
 
 title   "Colsole Runfile"
 summary "Runfile tasks for building the Colsole gem"
@@ -11,6 +13,13 @@ RunfileTasks::Docs.rdoc
 help   "Run example script"
 action :example do
   exec "ruby -w example.rb"
+end
+
+help   "Generate changelog and append old changelog"
+action :changelog do
+  system "git changelog --save"
+  # append older changelog (prior to switching to git-changelog)
+  system "cat .changelog.old.md >> CHANGELOG.md"
 end
 
 require_relative 'debug' if File.exist? 'debug.rb'
