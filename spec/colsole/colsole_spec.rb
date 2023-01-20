@@ -71,13 +71,13 @@ describe Colsole do
     end
 
     context 'when TTY environment is unset' do
-      let(:console_mock) { double IO, tty: true}
+      let(:console_mock) { double IO, tty?: true }
 
       it 'refers to the stream' do
         prev_value = ENV['TTY']
         ENV['TTY'] = nil
         allow(IO).to receive(:console).and_return console_mock
-        allow(console_mock).to receive(:tty?).and_return true
+
         expect(terminal?).to be true
         ENV['TTY'] = prev_value
       end
