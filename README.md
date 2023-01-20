@@ -20,7 +20,7 @@ Utility functions for colorful console applications.
 Add to your Gemfile:
 
 ```
-$ gem 'colsole', '>= 0.7.0', '< 2.0'
+$ gem 'colsole', '>= 0.6.0', '< 2.0'
 ```
 
 ## Examples
