@@ -152,7 +152,7 @@ Follow these steps to upgrade:
 # => Require a more flexible version.
 # change this
 gem 'colsole'
-# to this
+# to this (to avoid conflicts with other gems that require 0.x)
 gem 'colsole', '>= 0.8.0', '< 2.0'
 
 # => Remove 'say_status'
