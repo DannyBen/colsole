@@ -155,7 +155,7 @@ Follow these steps to upgrade:
 # change this
 gem 'colsole'
 # to this (to avoid conflicts with other gems that require 0.x)
-gem 'colsole', '>= 0.7.0', '< 2.0'
+gem 'colsole', '>= 0.6.0', '< 2.0'
 
 # => Remove 'say_status'
 # It will no longer be supported in 1.0.0
