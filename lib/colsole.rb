@@ -1,16 +1,18 @@
 require 'io/console'
 require 'colsole/compat'
 
-# Utility methods for console applications
+# Utility functions for colorful console applications.
 module Colsole
   ANSI_COLORS = {
-    'n' => "\e[30m", # no color
+    'n' => '',       # no color
+    'k' => "\e[30m", # black
     'r' => "\e[31m", # red
     'g' => "\e[32m", # green
     'y' => "\e[33m", # yellow
     'b' => "\e[34m", # blue
     'm' => "\e[35m", # magenta
     'c' => "\e[36m", # cyan
+    'w' => "\e[37m", # white
   }
 
   ANSI_STYLES = {
