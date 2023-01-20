@@ -48,4 +48,11 @@ describe Colsole do
       end
     end
   end
+
+  describe '#detect_terminal_size' do
+    it 'is forwards to terminal_size' do
+      expect(detect_terminal_size).to eq terminal_size
+    end
+  end
+
 end
