@@ -12,6 +12,7 @@ AllCops:
   Exclude:
     - example.rb
     - dev/**/*
+    - debug.rb
 
 # Allow `$stderr.puts`, we don't want `warn`
 Style/StderrPuts:

@@ -1,4 +1,6 @@
+require 'colsole'
 require "runfile-tasks"
+include Colsole
 
 title   "Colsole Runfile"
 summary "Runfile tasks for building the Colsole gem"
