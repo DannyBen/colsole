@@ -20,7 +20,7 @@ Utility functions for colorful console applications.
 Add to your Gemfile:
 
 ```
-$ gem 'colsole', '>= 0.8.0', '< 2.0'
+$ gem 'colsole', '>= 0.8.1', '< 2.0'
 ```
 
 ## Examples
@@ -155,7 +155,7 @@ Follow these steps to upgrade:
 # change this
 gem 'colsole'
 # to this
-gem 'colsole', '>= 0.8.0', '< 2.0'
+gem 'colsole', '>= 0.8.1', '< 2.0'
 
 # => Remove 'say_status'
 # It will no longer be supported in 1.0.0
