@@ -20,7 +20,7 @@ Utility functions for colorful console applications.
 Add to your Gemfile:
 
 ```
-$ gem 'colsole'
+$ gem 'colsole', '>= 0.7.0', '< 2.0'
 ```
 
 ## Examples
@@ -101,10 +101,10 @@ Returns true if we are running in an interactive terminal
 
 Checks if the provided string is a command in the path.
 
-### `terminal_size fallback_value`
+### `terminal_size [fallback_cols, fallback_rows]`
 
 Returns an array `[width, height]` of the terminal, or the supplied 
-`fallback_value` if it is unable to detect.
+fallback if it is unable to detect.
 
 ### `terminal_width` / `terminal_height`
 
