@@ -9,10 +9,10 @@
 Utility functions for colorful console applications.
 
 > **Upgrade Note**
->
+> 
 > This README is for the latest version of colsole (0.8.x), which is compatible
 > with older versions. Version 1.x will NOT be compatible.
->
+> 
 > See [Uprading](#upgrading) below.
 
 ## Install
@@ -21,6 +21,21 @@ Add to your Gemfile:
 
 ```
 $ gem 'colsole', '>= 0.8.1', '< 2.0'
+```
+
+## Usage
+
+```ruby
+require 'colsole'
+include Colsole
+say 'b`Blue` Man Group'
+```
+
+All the methods described below can also be called directly on the `Colsole` module. This is useful when you want to use it at the top level of your project, without namespace contamination:
+
+```ruby
+require 'colsole'
+Colsole.say 'b`Blue` Man Group'
 ```
 
 ## Examples
@@ -59,7 +74,6 @@ say "downloading data... "
 # long process here...
 say "download complete.", replace: true
 ```
-
 
 ### `word_wrap "   string" [, length]`
 
@@ -111,7 +125,6 @@ fallback if it is unable to detect.
 Returns only the terminal width or height. This is a shortcut to 
 `terminal_size[0]` / terminal_size[1].
 
-
 ## Colors
 
 Strings that are surrounded by backticks, and preceded by a color code and
@@ -123,24 +136,24 @@ say "this is b`blue` and ru`this is red underlined`"
 
 The one letter color code is required, followed by up to 3 style code.
 
-| Color Code | Color
-|------------|-------
-| `n`        | no color
-| `k`        | black
-| `r`        | red
-| `g`        | green
-| `y`        | yellow
-| `b`        | blue
-| `m`        | magenta
-| `c`        | cyan
-| `w`        | white
+| Color Code | Color    |
+| ---------- | -------- |
+| `n`        | no color |
+| `k`        | black    |
+| `r`        | red      |
+| `g`        | green    |
+| `y`        | yellow   |
+| `b`        | blue     |
+| `m`        | magenta  |
+| `c`        | cyan     |
+| `w`        | white    |
 
-| Style Code | Style
-|------------|-------
-| `b`        | bold
-| `u`        | underlined
-| `i`        | inverted
-| `z`        | terminate
+| Style Code | Style      |
+| ---------- | ---------- |
+| `b`        | bold       |
+| `u`        | underlined |
+| `i`        | inverted   |
+| `z`        | terminate  |
 
 ## Upgrading
 
@@ -150,7 +163,6 @@ markers. For easy transition, it is compatible with older versions.
 Follow these steps to upgrade:
 
 ```ruby
-
 # => Require a more flexible version
 # change this
 gem 'colsole'

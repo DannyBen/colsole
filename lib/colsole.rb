@@ -22,6 +22,8 @@ module Colsole
     'z' => "\e[0m", # terminate
   }
 
+module_function
+
   # Output a string with optional color markers to stdout.
   # If text is ended with a white space, you can call again with replace: true
   # to replace that line

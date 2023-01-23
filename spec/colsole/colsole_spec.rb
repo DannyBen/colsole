@@ -1,4 +1,8 @@
 describe Colsole do
+  it 'can receive methods on the module itself' do
+    expect { described_class.say 'hello' }.to output("hello\n").to_stdout
+  end
+
   describe '#say' do
     it 'prints the message' do
       expect { say 'hello' }.to output("hello\n").to_stdout
@@ -75,7 +79,7 @@ describe Colsole do
         prev_value = ENV['TTY']
         ENV['TTY'] = nil
         allow($stdout).to receive(:tty?).and_return true
-        
+
         expect(terminal?).to be true
         ENV['TTY'] = prev_value
       end
@@ -173,7 +177,7 @@ describe Colsole do
       context 'when it cannot detect size' do
         subject { terminal_size [55, 33] }
 
-        let(:console_mock) { double IO, winsize: [nil, nil]}
+        let(:console_mock) { double IO, winsize: [nil, nil] }
 
         before do
           allow(IO).to receive(:console).and_return console_mock
@@ -188,7 +192,7 @@ describe Colsole do
       context 'when $stdout.winsize raises Errno::ENOTTY' do
         subject { terminal_size [55, 33] }
 
-        let(:console_mock) { double IO, winsize: nil}
+        let(:console_mock) { double IO, winsize: nil }
 
         before do
           allow(IO).to receive(:console).and_return console_mock

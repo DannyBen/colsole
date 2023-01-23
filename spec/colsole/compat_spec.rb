@@ -54,5 +54,4 @@ describe Colsole do
       expect(detect_terminal_size).to eq terminal_size
     end
   end
-
 end
