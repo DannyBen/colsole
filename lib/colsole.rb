@@ -121,8 +121,6 @@ module_function
     process_color_markers(compat_string) { |_color, _styles, text| text }
   end
 
-private
-
   def process_color_markers(string)
     string.gsub(/([rgybmcn])([ubi]{0,3})`([^`]*)`/) do
       color = ANSI_COLORS[$1]

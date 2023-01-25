@@ -2,6 +2,8 @@
 # for compatibility with older versions of colsole.
 # Do not use these methods directly.
 module Colsole
+module_function
+
   def detect_terminal_size(*args)
     terminal_size(*args)
   end
