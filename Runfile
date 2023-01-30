@@ -1,14 +1,8 @@
-require 'colsole'
-require "runfile-tasks"
-include Colsole
-
 title   "Colsole Runfile"
 summary "Runfile tasks for building the Colsole gem"
 version Colsole::VERSION
 
-RunfileTasks::RubyGems.all 'colsole'
-RunfileTasks::Testing.rspec
-RunfileTasks::Docs.rdoc
+import_gem 'runfile-tasks/gem', gemname: 'colsole'
 
 help   "Run example script"
 action :example do
@@ -22,4 +16,3 @@ action :changelog do
   system "cat .changelog.old.md >> CHANGELOG.md"
 end
 
-require_relative 'debug' if File.exist? 'debug.rb'

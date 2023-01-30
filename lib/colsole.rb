@@ -1,5 +1,4 @@
 require 'io/console'
-require 'colsole/compat'
 
 # Utility functions for colorful console applications.
 module Colsole
@@ -105,20 +104,14 @@ module_function
 
   # Convert color markers to ansi colors.
   def colorize(string)
-    # compatibility later
-    compat_string = old_colorize string
-
-    process_color_markers compat_string do |color, styles, text|
+    process_color_markers string do |color, styles, text|
       "#{styles}#{color}#{text}#{ANSI_STYLES['z']}"
     end
   end
 
   # Remove color markers.
   def strip_colors(string)
-    # compatibility layer
-    compat_string = old_strip_colors string
-
-    process_color_markers(compat_string) { |_color, _styles, text| text }
+    process_color_markers(string) { |_color, _styles, text| text }
   end
 
   def process_color_markers(string)
