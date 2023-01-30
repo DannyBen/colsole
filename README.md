@@ -10,8 +10,8 @@ Utility functions for colorful console applications.
 
 > **Upgrade Note**
 > 
-> This README is for the latest version of colsole (0.8.x), which is compatible
-> with older versions. Version 1.x will NOT be compatible.
+> - Version 1.0.x is not compatible older versions
+> - Version 0.8.x is compatible with bothe the old syntax and new syntax
 > 
 > See [Uprading](#upgrading) below.
 
