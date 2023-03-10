@@ -2,7 +2,7 @@ title   "Colsole Runfile"
 summary "Runfile tasks for building the Colsole gem"
 version Colsole::VERSION
 
-import_gem 'runfile-tasks/gem', gemname: 'colsole'
+import_gem 'runfile-tasks/gem'
 
 help   "Run example script"
 action :example do
