@@ -170,7 +170,7 @@ describe Colsole do
 
       it 'refers to winsize' do
         expected = safe_get_tty_size
-        expect(subject).to match_array([Integer, Integer])
+        expect(subject).to contain_exactly(Integer, Integer)
         expect(subject).to eq expected
       end
 
