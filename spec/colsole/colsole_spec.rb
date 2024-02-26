@@ -249,7 +249,7 @@ describe Colsole do
   end
 
   describe '#strip_colors' do
-    it 'returns a strin without colsole color markers' do
+    it 'returns a string without colsole color markers' do
       expect(strip_colors 'b`hello` g`world`').to eq 'hello world'
     end
   end

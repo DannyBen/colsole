@@ -13,7 +13,7 @@ Utility functions for colorful console applications.
 > - Version 1.0.x is not compatible with older versions
 > - Version 0.8.x is compatible with both the old syntax and new syntax
 > 
-> See [Uprading](#upgrading) below.
+> See [Upgrading](#upgrading) below.
 
 ## Install
 
