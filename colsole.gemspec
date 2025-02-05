@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.files       = Dir['README.md', 'lib/**/*.rb']
   s.homepage    = 'https://github.com/DannyBen/colsole'
   s.license     = 'MIT'
-  s.required_ruby_version = '>= 3.0'
+  s.required_ruby_version = '>= 3.1'
 
   s.metadata['rubygems_mfa_required'] = 'true'
 end
