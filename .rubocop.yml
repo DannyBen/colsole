@@ -8,7 +8,8 @@ inherit_gem:
     - rspec.yml
 
 AllCops:
-  TargetRubyVersion: 3.0
+  TargetRubyVersion: 3.1
+  SuggestExtensions: false
   Exclude:
     - example.rb
     - dev/**/*
@@ -25,12 +26,7 @@ Style/OptionalBooleanParameter:
   Exclude:
     - 'lib/colsole.rb'
 
-# TODO: Remove when compatibility layer is removed
-RSpec/FilePath:
-  Exclude:
-    - spec/colsole/compat_spec.rb
-
-# TODO: Remove when compatibility layer is removed
+# Allow a longer module
 Metrics/ModuleLength:
   Exclude:
     - lib/colsole.rb
