@@ -1,11 +1,5 @@
 # Colsole
 
-[![Gem Version](https://badge.fury.io/rb/colsole.svg)](https://badge.fury.io/rb/colsole)
-[![Build Status](https://github.com/DannyBen/colsole/workflows/Test/badge.svg)](https://github.com/DannyBen/colsole/actions?query=workflow%3ATest)
-[![Maintainability](https://api.codeclimate.com/v1/badges/0556015f7cd2080531a1/maintainability)](https://codeclimate.com/github/DannyBen/colsole/maintainability)
-
----
-
 Utility functions for colorful console applications.
 
 > **Upgrade Note**
