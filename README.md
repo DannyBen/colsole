@@ -1,5 +1,7 @@
 # Colsole
 
+![repocard](https://repocard.dannyben.com/svg/colsole.svg)
+
 Utility functions for colorful console applications.
 
 > **Upgrade Note**
