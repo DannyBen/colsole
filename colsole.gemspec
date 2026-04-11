@@ -14,5 +14,10 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
   s.required_ruby_version = '>= 3.1'
 
-  s.metadata['rubygems_mfa_required'] = 'true'
+  s.metadata = {
+    'bug_tracker_uri'       => 'https://github.com/DannyBen/colsole/issues',
+    'changelog_uri'         => 'https://github.com/DannyBen/colsole/blob/master/CHANGELOG.md',
+    'source_code_uri'       => 'https://github.com/DannyBen/colsole',
+    'rubygems_mfa_required' => 'true',
+  }
 end

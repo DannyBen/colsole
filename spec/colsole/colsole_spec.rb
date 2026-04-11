@@ -28,7 +28,27 @@ describe Colsole do
     context 'with color markers' do
       it 'prints ansi colors' do
         expect { say 'g`hello` w`world`' }
-          .to output("\e[32mhello\e[0m w`world`\n").to_stdout
+          .to output("\e[32mhello\e[0m \e[37mworld\e[0m\n").to_stdout
+      end
+
+      context 'when colors are disabled' do
+        old_force_color = ENV['FORCE_COLOR']
+        old_no_color = ENV['NO_COLOR']
+
+        before do
+          ENV['FORCE_COLOR'] = nil
+          ENV['NO_COLOR'] = '1'
+        end
+
+        after do
+          ENV['FORCE_COLOR'] = old_force_color
+          ENV['NO_COLOR'] = old_no_color
+        end
+
+        it 'strips color markers' do
+          expect { say 'g`hello` w`world`' }
+            .to output("hello world\n").to_stdout
+        end
       end
     end
 
@@ -50,7 +70,7 @@ describe Colsole do
     context 'with color markers' do
       it 'prints ansi colors' do
         expect { say! 'g`hello` w`world`' }
-          .to output("\e[32mhello\e[0m w`world`\n").to_stderr
+          .to output("\e[32mhello\e[0m \e[37mworld\e[0m\n").to_stderr
       end
     end
   end
@@ -203,6 +223,18 @@ describe Colsole do
           expect(subject).to eq [55, 33]
         end
       end
+
+      context 'when IO.console is unavailable' do
+        subject { terminal_size [55, 33] }
+
+        before do
+          allow(IO).to receive(:console).and_return nil
+        end
+
+        it 'returns the default values' do
+          expect(subject).to eq [55, 33]
+        end
+      end
     end
   end
 
@@ -246,11 +278,23 @@ describe Colsole do
     it 'returns an ansi-colored string' do
       expect(colorize 'b`hello` g`world`').to eq "\e[34mhello\e[0m \e[32mworld\e[0m"
     end
+
+    it 'supports all configured color markers' do
+      Colsole::ANSI_COLORS.each do |code, color|
+        expect(colorize "#{code}`hello`").to eq "#{color}hello\e[0m"
+      end
+    end
   end
 
   describe '#strip_colors' do
     it 'returns a string without colsole color markers' do
       expect(strip_colors 'b`hello` g`world`').to eq 'hello world'
+    end
+
+    it 'strips all configured color markers' do
+      Colsole::ANSI_COLORS.each_key do |code|
+        expect(strip_colors "#{code}`hello`").to eq 'hello'
+      end
     end
   end
 end

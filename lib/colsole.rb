@@ -115,7 +115,9 @@ module_function
   end
 
   def process_color_markers(string)
-    string.gsub(/([rgybmcn])([ubi]{0,3})`([^`]*)`/) do
+    color_codes = Regexp.union(ANSI_COLORS.keys)
+
+    string.gsub(/(#{color_codes})([ubi]{0,3})`([^`]*)`/) do
       color = ANSI_COLORS[$1]
       styles = $2.chars.map { |a| ANSI_STYLES[a] }.join
       text = $3
