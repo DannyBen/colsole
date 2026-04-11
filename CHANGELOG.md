@@ -1,10 +1,12 @@
-Change Log
+Changelog
 ========================================
 
-Untagged - Latest
+v1.0.1 - 2026-04-11
 ----------------------------------------
 
 - Drop support for Ruby 2.x
+- Drop support for Ruby 3.0
+- Fix support for black and white colors
 
 
 v1.0.0 - 2023-01-30
