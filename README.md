@@ -4,13 +4,6 @@
 
 Utility functions for colorful console applications.
 
-> **Upgrade Note**
-> 
-> - Version 1.0.x is not compatible with older versions
-> - Version 0.8.x is compatible with both the old syntax and new syntax
-> 
-> See [Upgrading](#upgrading) below.
-
 ## Install
 
 Add to your Gemfile:
@@ -151,34 +144,11 @@ The one letter color code is required, followed by up to 3 style code.
 | `i`        | inverted   |
 | `z`        | terminate  |
 
-## Upgrading
+## Contributing / Support
 
-Version 0.8.x changes several things, including the syntax of the color
-markers. For easy transition, it is compatible with older versions.
+If you experience any issue, have a question or a suggestion, or if you wish
+to contribute, feel free to [open an issue][issues].
 
-Follow these steps to upgrade:
+---
 
-```ruby
-# => Require a more flexible version
-# change this
-gem 'colsole'
-# to this
-gem 'colsole', '>= 0.8.1', '< 2.0'
-
-# => Remove 'say_status'
-# It will no longer be supported in 1.0.0
-say_status "text"
-
-# => Replace 'resay'
-# 'resay' is replaced with 'say replace: true'
-# change this
-resay "text"
-# to this
-say "text", replace: true
-
-# => Change color markers syntax
-# replace this
-say "the !txtblu!blue"
-# with this
-say "the b`blue`"
-```
+[issues]: https://github.com/dannyben/colsole/issues
